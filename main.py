@@ -1,6 +1,7 @@
 import pygame
 import random_ant_movement
 import add_ants
+import noise
 from utils import scale_image, blit_rotate_center
 
 BLACK = (0, 0 ,0)
