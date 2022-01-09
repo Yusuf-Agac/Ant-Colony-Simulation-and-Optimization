@@ -1,7 +1,8 @@
 import pygame
+import food
 from parameters import *
 from vector import Vector
-from math import pi, degrees, radians
+from math import pi, degrees, radians, sqrt, exp, atan
 import random
 
 #Neredeyse bir çizgi üzerinden en kısa yoldan git
@@ -10,16 +11,21 @@ def calculate_Direct_GoingDirection():
     pass
 
 #Belirtilen konumuna
-def calculate_Random_GoingDirection():
-    pass
+def calculate_Random_GoingDirection(Position, Velocity, focusPosition):
+    waysXlength = focusPosition.x - Position.x
+    waysYlength = focusPosition.y - Position.y
+    theLength = sqrt(((focusPosition.x-Position.x)*(focusPosition.x-Position.x))+((focusPosition.y-Position.y)*(focusPosition.y-Position.y)))
+    inclination = (focusPosition.y - Position.y)/(focusPosition.y - Position.y)
+    howMuchStep = int(theLength/Velocity)
+    theAngle = atan(inclination)
 
 #Hedefi yok, random gez
 #Yani bir kareliğine random hareket et
 def Random_Travel():
     pass
 
-def Bite():
-    pass
+def bite(nearFood):
+    nearFood.Bite()
 
 ##Ant Grid Structure: Sahneyi gridlere böl, her grid 2 referans 2 deger tutsun. Referanslar: Biri en son geçenin yemegi bulduğu nokta, 
 # digeri en son geçenin evden çıktığı nokta. Degerler: fenomon gucleri
@@ -56,7 +62,7 @@ class Ant:
                 gidilecek_yol_kaldi_mi = calculate_Direct_GoingDirection(self.position, self.velocity, closest_food)
                 #Yemeğe direk gitme hesaplamasını yap, ısırabiliyorsan ısır ve eve dönüş state'lerini vs yap
                 if(not gidilecek_yol_kaldi_mi):
-                    Isır()
+                    bite(closest_food)
 
 
             #Yemek uzakta, en yakın yemek feromonunu bul sonra yemege git.
