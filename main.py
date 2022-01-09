@@ -6,7 +6,7 @@ import ant
 from utils import scale_image, blit_rotate_center
 
 BLACK = (0, 0 ,0)
-GRAY = (128, 128, 128)
+GRAY = (150, 150, 150)
 
 ANT = scale_image(pygame.image.load("ant.png"), 0.4)
 FOOD = scale_image(pygame.image.load("food.png"), 1)
