@@ -1,23 +1,46 @@
+from _typeshed import Self
+import math
 import pygame
 import food
 from parameters import *
 from vector import Vector
-from math import pi, degrees, radians, sqrt, exp, atan
+from math import pi, degrees, radians, sqrt, exp, atan, trunc
 import random
 
 #Neredeyse bir çizgi üzerinden en kısa yoldan git
 #Eger gidecek yol kalmadiysa false döndür
-def calculate_Direct_GoingDirection():
+def calculate_Random_GoingDirection():
     pass
 
 #Belirtilen konumuna
-def calculate_Random_GoingDirection(Position, Velocity, focusPosition):
+stepAmount = 0
+isFocused = False
+def calculate_Direct_GoingDirection(Position, Velocity, focusPosition):
+    global stepAmount
+    global isFocused
     waysXlength = focusPosition.x - Position.x
     waysYlength = focusPosition.y - Position.y
-    theLength = sqrt(((focusPosition.x-Position.x)*(focusPosition.x-Position.x))+((focusPosition.y-Position.y)*(focusPosition.y-Position.y)))
-    inclination = (focusPosition.y - Position.y)/(focusPosition.y - Position.y)
+    theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
+    inclination = (waysYlength)/(waysXlength)
     howMuchStep = int(theLength/Velocity)
     theAngle = atan(inclination)
+    self.angle = theAngle
+    stepAmount = howMuchStep
+    isFocused = True 
+def directStep():
+    global isFocused
+    radians = math.radians(self.angle)
+    vertical = math.cos(radians) * self.velocity
+    horizontal = math.sin(radians) * self.velocity
+
+    self.y -= vertical
+    self.x -= horizontal
+    stepAmount = stepAmount - 1
+
+    if(stepAmount <= 0):
+        isFocused = False
+
+
 
 #Hedefi yok, random gez
 #Yani bir kareliğine random hareket et
