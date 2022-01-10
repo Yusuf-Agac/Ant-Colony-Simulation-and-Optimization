@@ -11,6 +11,17 @@ screen_offset = 30
 pygame.font.init()
 text_color = (white)
 
+
+
+
+
+##DON'T USE THESE THINGS BELOW!
+
+
+
+
+
+
 class Food:
     #Size is size of food
     def __init__(self, position, size, win):
@@ -77,7 +88,6 @@ class FoodMap:
     def Show(self, screen):
         for food in self.foods:
             food.Show(screen)
-
 
 
 

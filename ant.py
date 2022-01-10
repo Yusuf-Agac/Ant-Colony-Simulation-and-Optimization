@@ -5,50 +5,14 @@ import food
 from parameters import *
 from vector import Vector
 from math import pi, degrees, radians, sqrt, exp, atan, trunc
+from calculateDirection_Direct import calculate_Direct_GoingDirection
+from random_ant_movement import Random_Travel
+from food import bite
+from noisy_goingdirection import calculate_Noisy_GoingDirection
 import random
-
-#Neredeyse bir çizgi üzerinden en kısa yoldan git
-#Eger gidecek yol kalmadiysa false döndür
-def calculate_Random_GoingDirection():
-    pass
-
-#Belirtilen konumuna
-stepAmount = 0
-isFocused = False
-def calculate_Direct_GoingDirection(Position, Velocity, focusPosition):
-    global stepAmount
-    global isFocused
-    waysXlength = focusPosition.x - Position.x
-    waysYlength = focusPosition.y - Position.y
-    theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
-    inclination = (waysYlength)/(waysXlength)
-    howMuchStep = int(theLength/Velocity)
-    theAngle = atan(inclination)
-    self.angle = theAngle
-    stepAmount = howMuchStep
-    isFocused = True 
-def directStep():
-    global isFocused
-    radians = math.radians(self.angle)
-    vertical = math.cos(radians) * self.velocity
-    horizontal = math.sin(radians) * self.velocity
-
-    self.y -= vertical
-    self.x -= horizontal
-    stepAmount = stepAmount - 1
-
-    if(stepAmount <= 0):
-        isFocused = False
+import WorldManagement
 
 
-
-#Hedefi yok, random gez
-#Yani bir kareliğine random hareket et
-def Random_Travel():
-    pass
-
-def bite(nearFood):
-    nearFood.Bite()
 
 ##Ant Grid Structure: Sahneyi gridlere böl, her grid 2 referans 2 deger tutsun. Referanslar: Biri en son geçenin yemegi bulduğu nokta, 
 # digeri en son geçenin evden çıktığı nokta. Degerler: fenomon gucleri
@@ -62,8 +26,9 @@ def bite(nearFood):
 #calculate_Direct_GoingDirection: Yusuf
 
 class Ant:
-    def __init__(self, mainWIN, position=Vector(), nest=None):
+    def __init__(self, mainWIN, position, world):
         self.mainWin = mainWIN
+        self.world : WorldManagement.World = world
         self.position = position
         self.velocity = Vector()
         self.max_speed = 3
@@ -74,7 +39,7 @@ class Ant:
 
         self.state = 0
 
-    def Update(self, foods, pheromones, dt):
+    def Update(self, pheromones):
         # Yemek ara
         if(self.state == 1):
             closest_food = None
@@ -91,13 +56,13 @@ class Ant:
             #Yemek uzakta, en yakın yemek feromonunu bul sonra yemege git.
             else:
                 #food döndürülmeli, okunmamalı
-                yemek_feromon_kokusu_aldi_mi = pheromoneMap.getClosestFoodPheromone(self.position, closest_food)
+                yemek_feromon_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(True, self.position, closest_food)
             
 
                 #Yakında yemek feromonu buldu, yemege gidiyor
                 if(yemek_feromon_kokusu_aldi_mi):
                     #Random gitmeyi vs hallet
-                    calculate_Random_GoingDirection(self.position, self.velocity, closest_food.position)
+                    calculate_Noisy_GoingDirection(self.position, self.velocity, closest_food.position)
                 else:
                     Random_Travel()
 
@@ -114,10 +79,10 @@ class Ant:
 
             #Yakında ev yok, ev feromonu ara
             else:
-                ev_kokusu_aldi_mi = pheromoneMap.getClosestNestPheromone(self.position, closest_nest)
+                ev_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(False, self.position, closest_nest)
 
                 if(ev_kokusu_aldi_mi):
-                    calculate_Random_GoingDirection(self.position, self.velocity)
+                    calculate_Noisy_GoingDirection(self.position, self.velocity)
                 else:
                     Random_Travel()
 
@@ -128,6 +93,25 @@ class Ant:
         # self.position += self.velocity.Normalize()  * dt * self.max_speed
         self.position += self.velocity
         self.angle = self.velocity.Heading()
+
+
+
+
+##DON'T USE THESE FUNCTIONS BELOW!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     def ReturnToNest(self, pheromone):

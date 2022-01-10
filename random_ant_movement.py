@@ -52,3 +52,9 @@ def randomMoveAnts(ants):
         
         if not moved:
             tryingAnt.reduce_speed()
+
+
+#Hedefi yok, random gez
+#Yani bir kareliğine random hareket et
+def Random_Travel():
+    pass
