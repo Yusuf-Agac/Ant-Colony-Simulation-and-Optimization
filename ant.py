@@ -1,13 +1,12 @@
-from _typeshed import Self
+#from _typeshed import Self
 import math
 import pygame
-import food
+import Food_and_Nest_Lists
 from parameters import *
 from vector import Vector
 from math import pi, degrees, radians, sqrt, exp, atan, trunc
 from calculateDirection_Direct import calculate_Direct_GoingDirection
 from random_ant_movement import Random_Travel
-from food import bite
 from noisy_goingdirection import calculate_Noisy_GoingDirection
 import random
 import WorldManagement
@@ -50,7 +49,7 @@ class Ant:
                 gidilecek_yol_kaldi_mi = calculate_Direct_GoingDirection(self.position, self.velocity, closest_food)
                 #Yemeğe direk gitme hesaplamasını yap, ısırabiliyorsan ısır ve eve dönüş state'lerini vs yap
                 if(not gidilecek_yol_kaldi_mi):
-                    bite(closest_food)
+                    Food_and_Nest_Lists.bite(closest_food)
 
 
             #Yemek uzakta, en yakın yemek feromonunu bul sonra yemege git.
@@ -93,6 +92,84 @@ class Ant:
         # self.position += self.velocity.Normalize()  * dt * self.max_speed
         self.position += self.velocity
         self.angle = self.velocity.Heading()
+
+
+##OLD ANT!
+
+##Change this class later!
+
+class AbstractAnt:
+    def __init__(self, max_vel, rotation_vel):
+        self.img = self.IMG
+        self.max_vel = max_vel
+        self.vel = 0
+        self.rotation_vel = rotation_vel
+        self.angle = random.randint(0,360)
+        self.x, self.y = self.START_POS
+
+        self.acceleration = 0.4
+        self.timesTurnLeft=0
+        self.timesTurnRight=0
+        self.timesNoTurn=0
+
+    def rotate(self, left=False, right=False):
+        if left:
+            self.angle += self.rotation_vel
+        elif right:
+            self.angle -= self.rotation_vel
+
+    def draw(self, win):
+        blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
+
+    def move_forward(self):
+        self.vel = min(self.vel + self.acceleration, self.max_vel)
+        self.move()
+
+    def move(self):
+        radians = math.radians(self.angle)
+        vertical = math.cos(radians) * self.vel
+        horizontal = math.sin(radians) * self.vel
+
+        self.y -= vertical
+        self.x -= horizontal
+
+    def reduce_speed(self):
+        self.vel = max(self.vel - self.acceleration / 5, 0)
+        self.move()
+    
+    def rotateBehind(self, key):
+        if(key==1):
+            self.angle = 270;
+        elif(key==2):
+            self.angle = 90;
+        elif(key==3):
+            self.angle = 180;
+        elif(key==4):
+            self.angle = 0;
+
+
+##  OLD ANT CLASS! FIX THESE
+
+import random
+import pygame
+import time
+import random
+import math
+import ant
+from utils import scale_image, blit_rotate_center
+
+
+
+
+ANT = scale_image(pygame.image.load("ant.png"), 0.4)
+FOOD = scale_image(pygame.image.load("food.png"), 1)
+
+WIDTH, HEIGHT = 1366, 768
+class tryAnt(AbstractAnt):
+    IMG = ANT
+    START_POS = (WIDTH / 2, HEIGHT / 2)
+
+
 
 
 

@@ -1,7 +1,6 @@
 import pygame
-import random_ant_movement
-import add_ants
 import noise
+import WorldManagement
 from utils import scale_image, blit_rotate_center
 
 BLACK = (0, 0 ,0)
@@ -15,39 +14,22 @@ pygame.display.set_caption("Ant Colony Optimisation!")
 FPS = 60
 
 
-def draw(win, antList):
-
-    for ants in antList:
-        ants.draw(win)
-
-    pygame.display.update()
-
-
-
-
 
 
 run = True
 clock = pygame.time.Clock()
-images = []
-
-ants = []
-add_ants.add_ants(ants)
-
+WORLDMANAGER : WorldManagement.World = WorldManagement.World(WIN)
 
 while run:
-
     clock.tick(FPS)
-
     WIN.fill(GRAY)
-    draw(WIN, ants)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
             break
     
-    random_ant_movement.randomMoveAnts(ants)
+    WORLDMANAGER.update_and_draw()
     
     pygame.display.flip()
 
