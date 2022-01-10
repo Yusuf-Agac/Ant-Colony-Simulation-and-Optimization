@@ -6,7 +6,6 @@ import pygame
 import time
 import random
 import math
-import ant
 import random_ant_movement
 from utils import scale_image, blit_rotate_center
 
@@ -16,19 +15,15 @@ rotateVel = 0.7
 maxVel = 2
 antAmount = 100
 
-def add_ants(ants):
-    for ant in range(antAmount):
-        ants.append(ant.tryAnt(maxVel, rotateVel))
-
-
 class World:
     def __init__(self, WIN) -> None:
         self.win = WIN
         self.map_of_pheromones : pheromoneMap.pheromoneMap = pheromoneMap.pheromoneMap(200,200)
-        self.ants : ant.Ant = []
-        ant.add_ants(self.ants)
+        self.ants : ant.tryAnt = []
 
-        pass
+        #Add ants
+        for ant_i in range(antAmount):
+            self.ants.append(ant.tryAnt(maxVel, rotateVel))
 
     def update_and_draw(self):
         for ant in self.ants:

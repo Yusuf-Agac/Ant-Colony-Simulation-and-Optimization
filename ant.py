@@ -38,7 +38,7 @@ class Ant:
 
         self.state = 0
 
-    def Update(self, pheromones):
+    def Update(self):
         # Yemek ara
         if(self.state == 1):
             closest_food = None
@@ -94,7 +94,7 @@ class Ant:
         self.angle = self.velocity.Heading()
 
 
-##OLD ANT!
+##OLD ANT CLASS! FIX!
 
 ##Change this class later!
 
@@ -146,9 +146,6 @@ class AbstractAnt:
             self.angle = 180;
         elif(key==4):
             self.angle = 0;
-
-
-##  OLD ANT CLASS! FIX THESE
 
 import random
 import pygame
