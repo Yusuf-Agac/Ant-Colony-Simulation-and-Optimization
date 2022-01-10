@@ -1,5 +1,4 @@
 import pygame
-import noise
 import WorldManagement
 from utils import scale_image, blit_rotate_center
 

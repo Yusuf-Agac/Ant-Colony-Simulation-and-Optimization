@@ -1,60 +1,71 @@
+import math
 import random
 
-def randomMoveAnts(ants):
+def Random_Travel(ant):
 
     turningTimesAmount = 10
-    turningMinus = 0.1 
+    turningMinus = 0.1
     
-    for tryingAnt in ants:
-        tryingAnt.max_vel = random.uniform(1.5, 2.5)
-        tryingAnt.rotation_vel = random.uniform(0.7, 1.7)
-        tryingAnt.acceleration = random.uniform(0.4, 0.8)
-        #this code block is deciding how ants are move
-        if tryingAnt.timesTurnLeft > 0:
-            tryingAnt.rotate(left = True)
-            tryingAnt.timesTurnLeft -= turningMinus
+    ant.maxVel = random.uniform(1.5, 2.5)
+    ant.rotationVel = random.uniform(0.7, 1.7)
+    ant.acceleration = random.uniform(0.4, 0.8)
+    
+    #this code block is deciding how ants are move
+    if ant.timesTurnLeft > 0:
+        ant.angle += ant.rotationVel
+        ant.timesTurnLeft -= turningMinus
 
-        elif tryingAnt.timesTurnRight > 0:
-            tryingAnt.rotate(right = True)
-            tryingAnt.timesTurnRight -= turningMinus
+    elif ant.timesTurnRight > 0:
+        ant.angle -= ant.rotationVel
+        ant.timesTurnRight -= turningMinus
 
-        elif tryingAnt.timesNoTurn > 0:
-            tryingAnt.timesNoTurn -= turningMinus
-
-
-
-        elif random.randint(0,1)==1:
-            tryingAnt.rotate(left=True)
-            tryingAnt.timesTurnLeft = random.randint(0,turningTimesAmount)
-
-        elif random.randint(0,1)==1:
-            tryingAnt.timesTurnRight = random.randint(0,turningTimesAmount)
-            tryingAnt.rotate(right=True)
-
-        else:
-            tryingAnt.timesNoTurn = random.randint(0,turningTimesAmount)
-        moved = False
-
-        if random.randint(0,2)==1:
-            moved = True
-            tryingAnt.move_forward()
+    elif ant.timesNoTurn > 0:
+        ant.timesNoTurn -= turningMinus
 
 
-            #this code block is an obstacle for curves of window
-        if(tryingAnt.x<-40):
-            tryingAnt.rotateBehind(1)
-        if(tryingAnt.x>1400):
-            tryingAnt.rotateBehind(2)
-        if(tryingAnt.y<-40):
-            tryingAnt.rotateBehind(3)
-        if(tryingAnt.y>800):
-            tryingAnt.rotateBehind(4)
+
+    elif random.randint(0,1)==1:
+        ant.timesTurnLeft = random.randint(0,turningTimesAmount)
+
+    elif random.randint(0,1)==1:
+        ant.timesTurnRight = random.randint(0,turningTimesAmount)
+
+    else:
+        ant.timesNoTurn = random.randint(0,turningTimesAmount)
+
+    moved = False
+
+    if random.randint(0,2)==1:
+        moved = True
+        ant.velocity = min(ant.velocity + ant.acceleration, ant.maxVel)
+        radians = math.radians(ant.angle)
+        vertical = math.cos(radians) * ant.velocity
+        horizontal = math.sin(radians) * ant.velocity
+
+        ant.y -= vertical
+        ant.x -= horizontal
+
+
+    #this code block is an obstacle for curves of window
+    if(ant.x<-40):
+        ant.angle = 270;
+    if(ant.x>1400):
+        ant.angle = 90;
+    if(ant.y<-40):
+        ant.angle = 180;
+    if(ant.y>800):
+        ant.angle = 0;
         
-        if not moved:
-            tryingAnt.reduce_speed()
+    if not moved:
+        ant.velocity = max(ant.velocity - ant.acceleration / 3, 0)
+
+        radians = math.radians(ant.angle)
+        vertical = math.cos(radians) * ant.velocity
+        horizontal = math.sin(radians) * ant.velocity
+
+        ant.y -= vertical
+        ant.x -= horizontal
 
 
 #Hedefi yok, random gez
 #Yani bir kareliğine random hareket et
-def Random_Travel():
-    pass

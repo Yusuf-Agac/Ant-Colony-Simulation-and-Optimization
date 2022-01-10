@@ -30,15 +30,25 @@ class Ant:
         self.world : WorldManagement.World = world
         self.position = position
         self.velocity = Vector()
-        self.max_speed = 3
+        self.maxVel = 3
+        self.rotationVel = 0.5
+        self.acceleration = 0.4
+
+        self.timesTurnLeft=0
+        self.timesTurnRight=0
+        self.timesNoTurn=0
+
         self.trigger_radius = 10
         self.smell_radius = 30
+
+        
+
         # angle in radiant
         self.angle = -self.velocity.Heading()
 
         self.state = 0
 
-    def Update(self):
+    def Update(self, pheromones):
         # Yemek ara
         if(self.state == 1):
             closest_food = None
@@ -94,7 +104,7 @@ class Ant:
         self.angle = self.velocity.Heading()
 
 
-##OLD ANT CLASS! FIX!
+##OLD ANT!
 
 ##Change this class later!
 
@@ -111,7 +121,7 @@ class AbstractAnt:
         self.timesTurnLeft=0
         self.timesTurnRight=0
         self.timesNoTurn=0
-
+    #sil
     def rotate(self, left=False, right=False):
         if left:
             self.angle += self.rotation_vel
@@ -120,11 +130,11 @@ class AbstractAnt:
 
     def draw(self, win):
         blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
-
+    #sil
     def move_forward(self):
         self.vel = min(self.vel + self.acceleration, self.max_vel)
         self.move()
-
+    #sil
     def move(self):
         radians = math.radians(self.angle)
         vertical = math.cos(radians) * self.vel
@@ -132,11 +142,12 @@ class AbstractAnt:
 
         self.y -= vertical
         self.x -= horizontal
-
+        
+    #sil
     def reduce_speed(self):
         self.vel = max(self.vel - self.acceleration / 5, 0)
         self.move()
-    
+    #sil
     def rotateBehind(self, key):
         if(key==1):
             self.angle = 270;
@@ -146,6 +157,9 @@ class AbstractAnt:
             self.angle = 180;
         elif(key==4):
             self.angle = 0;
+
+
+##  OLD ANT CLASS! FIX THESE
 
 import random
 import pygame
