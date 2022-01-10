@@ -23,13 +23,14 @@ import WorldManagement
 #Isır: Yusuf
 #Random Travel: Yusuf
 #calculate_Direct_GoingDirection: Yusuf
-
+#self, mainWIN, world (parameters)
 class Ant:
-    def __init__(self, mainWIN, position, world):
-        self.mainWin = mainWIN
-        self.world : WorldManagement.World = world
-        self.position = position
-        self.velocity = Vector()
+    def __init__(self, mainWIN, world):
+        #self.mainWin = mainWIN
+        #self.world : WorldManagement.World = world
+        self.x, self.y = (WIDTH / 2, HEIGHT / 2)
+
+        self.velocity = 2
         self.maxVel = 3
         self.rotationVel = 0.5
         self.acceleration = 0.4
@@ -41,12 +42,14 @@ class Ant:
         self.trigger_radius = 10
         self.smell_radius = 30
 
-        
-
-        # angle in radiant
-        self.angle = -self.velocity.Heading()
+        self.angle = random.randint(0,360)
 
         self.state = 0
+        self.IMG = scale_image(pygame.image.load("ant.png"), 0.4)
+        self.img = self.IMG
+
+    def draw(self, win):
+        blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
 
     def Update(self, pheromones):
         # Yemek ara
@@ -121,42 +124,9 @@ class AbstractAnt:
         self.timesTurnLeft=0
         self.timesTurnRight=0
         self.timesNoTurn=0
-    #sil
-    def rotate(self, left=False, right=False):
-        if left:
-            self.angle += self.rotation_vel
-        elif right:
-            self.angle -= self.rotation_vel
 
     def draw(self, win):
         blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
-    #sil
-    def move_forward(self):
-        self.vel = min(self.vel + self.acceleration, self.max_vel)
-        self.move()
-    #sil
-    def move(self):
-        radians = math.radians(self.angle)
-        vertical = math.cos(radians) * self.vel
-        horizontal = math.sin(radians) * self.vel
-
-        self.y -= vertical
-        self.x -= horizontal
-        
-    #sil
-    def reduce_speed(self):
-        self.vel = max(self.vel - self.acceleration / 5, 0)
-        self.move()
-    #sil
-    def rotateBehind(self, key):
-        if(key==1):
-            self.angle = 270;
-        elif(key==2):
-            self.angle = 90;
-        elif(key==3):
-            self.angle = 180;
-        elif(key==4):
-            self.angle = 0;
 
 
 ##  OLD ANT CLASS! FIX THESE

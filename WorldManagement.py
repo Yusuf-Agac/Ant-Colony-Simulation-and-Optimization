@@ -1,6 +1,7 @@
+from typing import AnyStr
 import pheromoneMap
 import Food_and_Nest_Lists
-import ant
+from ant import *
 import random
 import pygame
 import time
@@ -14,23 +15,27 @@ from utils import scale_image, blit_rotate_center
 rotateVel = 0.7
 maxVel = 2
 antAmount = 100
+ants = []
 
 class World:
+    global ants
     def __init__(self, WIN) -> None:
         self.win = WIN
         self.map_of_pheromones : pheromoneMap.pheromoneMap = pheromoneMap.pheromoneMap(200,200)
-        self.ants : ant.tryAnt = []
+        
 
         #Add ants
         for ant_i in range(antAmount):
-            self.ants.append(ant.tryAnt(maxVel, rotateVel))
+            ants.append(Ant(self.win, self))
 
     def update_and_draw(self):
-        for ant in self.ants:
+        for ant in ants:
             ant.draw(self.win)
 
         pygame.display.update()
-        random_ant_movement.randomMoveAnts(self.ants)
+
+        for ant in ants:
+            random_ant_movement.Random_Travel(ant)
 
 
     def add_Food(food_pos, food_scentrange):

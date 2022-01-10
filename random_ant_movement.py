@@ -3,7 +3,7 @@ import random
 
 def Random_Travel(ant):
 
-    turningTimesAmount = 10
+    turningTimesAmount = 5
     turningMinus = 0.1
     
     ant.maxVel = random.uniform(1.5, 2.5)
@@ -23,15 +23,21 @@ def Random_Travel(ant):
         ant.timesNoTurn -= turningMinus
 
 
-
-    elif random.randint(0,1)==1:
-        ant.timesTurnLeft = random.randint(0,turningTimesAmount)
-
-    elif random.randint(0,1)==1:
-        ant.timesTurnRight = random.randint(0,turningTimesAmount)
-
     else:
-        ant.timesNoTurn = random.randint(0,turningTimesAmount)
+        key = random.randint(0,2)
+        switcher = {
+            0: "zero",
+            1: "one",
+            2: "two",
+        }
+        if switcher.get(key)=="zero":
+            ant.timesTurnLeft = random.randint(0,turningTimesAmount)
+
+        elif switcher.get(key)=="one":
+            ant.timesTurnRight = random.randint(0,turningTimesAmount)
+
+        else:
+            ant.timesNoTurn = random.randint(0,turningTimesAmount)
 
     moved = False
 
