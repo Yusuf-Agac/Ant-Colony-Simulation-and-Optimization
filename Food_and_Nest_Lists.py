@@ -23,6 +23,9 @@ class food:
     def draw(self, win):
         blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
     
+    def kill(self):
+        del self
+
 
 def WhichFoodIsClosest(x, y):
 
@@ -41,10 +44,12 @@ def WhichFoodIsClosest(x, y):
 
         return theClosest
 
-def Bite(Food):
+def Bite(Food, theAnt):
     Food.size -= 1
+    theAnt.gidilecek_yol_kaldi_mi = True
+    #theAnt.state = 2
     if Food.size <= 0:
-        del Food
+        Food.kill()
     
 
 

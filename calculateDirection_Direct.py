@@ -2,38 +2,33 @@ import math
 from math import pi, degrees, radians, sqrt, atan2
 
 #Belirtilen konumuna
-stepAmount = 0
 
 def calculate_Direct_GoingDirection(focusX, focusY, ant):
     global stepAmount
 
-    waysXlength = (focusX - ant.x)**2
-    waysYlength = (focusY - ant.y)**2
+    waysXlength = focusX - ant.x
+    waysYlength = focusY - ant.y
 
     theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
-    
-    howMuchStep = theLength/ant.velocity
 
-    radian = atan2(waysYlength, waysYlength)
-    degree = radian*(180/pi)
-    ant.angle = degree
+    dx = waysXlength
+    dy = waysYlength
+    rads = atan2(-dy,dx)
+    rads %= 2*pi
+    degs = degrees(rads)
 
-    stepAmount = howMuchStep
+    ant.angle = degs - 90 
 
-    directStep(ant)
+    if theLength > 5:
+        directStep(ant)
+    else:
+        ant.gidilecek_yol_kaldi_mi = False
 
 def directStep(ant):
-    global stepAmount
 
-    while stepAmount <= 0:
-        radians = math.radians(ant.angle)
-        vertical = math.cos(radians) * ant.velocity
-        horizontal = math.sin(radians) * ant.velocity
+    radians = math.radians(ant.angle)
+    vertical = math.cos(radians) * ant.velocity
+    horizontal = math.sin(radians) * ant.velocity
 
-        ant.y -= vertical
-        ant.x -= horizontal
-    
-        stepAmount = stepAmount - 1
-
-    if(stepAmount <= 0):
-        ant.gidilecek_yol_kaldi_mi = False
+    ant.y -= vertical
+    ant.x -= horizontal

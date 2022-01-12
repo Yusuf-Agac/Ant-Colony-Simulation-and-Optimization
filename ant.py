@@ -81,7 +81,7 @@ class Ant:
 
                 #Yemeğe direk gitme hesaplamasını yap, ısırabiliyorsan ısır ve eve dönüş state'lerini vs yap
                 if(not self.gidilecek_yol_kaldi_mi):
-                    Bite(closest_food)
+                    Bite(closest_food, self)
 
 
             #Yemek uzakta, en yakın yemek feromonunu bul sonra yemege git.
