@@ -1,6 +1,6 @@
 from typing import AnyStr
 import pheromoneMap
-import Food_and_Nest_Lists
+from Food_and_Nest_Lists import *
 from ant import *
 import random
 import pygame
@@ -15,6 +15,7 @@ from utils import scale_image, blit_rotate_center
 rotateVel = 0.7
 maxVel = 2
 antAmount = 100
+foodAmount = 1
 ants = []
 
 class World:
@@ -27,10 +28,18 @@ class World:
         #Add ants
         for ant_i in range(antAmount):
             ants.append(Ant(self.win, self))
+        
+        #fill do FOODLIST
+        for food_i in range(antAmount):
+            FoodList.append(food())
 
     def update_and_draw(self):
         for ant in ants:
             ant.draw(self.win)
+            ant.Update()
+        
+        for food in FoodList:
+            food.draw(self.win)
 
         pygame.display.update()
 

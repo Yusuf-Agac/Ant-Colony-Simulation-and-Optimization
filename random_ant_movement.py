@@ -63,7 +63,7 @@ def Random_Travel(ant):
         ant.angle = 0;
         
     if not moved:
-        ant.velocity = max(ant.velocity - ant.acceleration / 3, 0)
+        ant.velocity = max(ant.velocity - ant.acceleration / 3, 0.01)
 
         radians = math.radians(ant.angle)
         vertical = math.cos(radians) * ant.velocity

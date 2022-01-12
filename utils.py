@@ -1,5 +1,6 @@
 import pygame
 
+WIDTH, HEIGHT = 1366, 768
 
 def scale_image(img, factor):
     size = round(img.get_width() * factor), round(img.get_height() * factor)

@@ -14,7 +14,6 @@ FPS = 60
 
 
 
-
 run = True
 clock = pygame.time.Clock()
 WORLDMANAGER : WorldManagement.World = WorldManagement.World(WIN)

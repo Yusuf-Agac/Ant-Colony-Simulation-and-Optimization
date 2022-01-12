@@ -10,7 +10,9 @@ from random_ant_movement import Random_Travel
 from noisy_goingdirection import calculate_Noisy_GoingDirection
 import random
 import WorldManagement
-
+from Food_and_Nest_Lists import *
+from random_ant_movement import Random_Travel
+from utils import *
 
 
 ##Ant Grid Structure: Sahneyi gridlere böl, her grid 2 referans 2 deger tutsun. Referanslar: Biri en son geçenin yemegi bulduğu nokta, 
@@ -40,33 +42,51 @@ class Ant:
         self.timesNoTurn=0
 
         self.trigger_radius = 10
-        self.smell_radius = 30
+        self.burun_gucu = 50
 
         self.angle = random.randint(0,360)
 
-        self.state = 0
-        self.IMG = scale_image(pygame.image.load("ant.png"), 0.4)
-        self.img = self.IMG
+        self.state = 1
+        self.img = scale_image(pygame.image.load("ant.png"), 0.4)
+
+        self.gidilecek_yol_kaldi_mi = True
 
     def draw(self, win):
         blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
 
-    def Update(self, pheromones):
+    def isCloseEnoughToFood(self, burun_gucu, closestFood):
+
+        waysXlength = closestFood.x - self.x
+        waysYlength = closestFood.y - self.y
+        theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
+        
+        if theLength > burun_gucu:
+            return False
+        else:
+            return True
+
+
+    #DIKKAT DIKKAT DIKKAT test icin kisa sureli "def Update(self, pheromones):" parametreleri def Update(self): yapildi
+    def Update(self):
         # Yemek ara
         if(self.state == 1):
-            closest_food = None
-            yemek_cok_yakin_mi = foodList.GetClosestFood(self.position, self.burun_gucu, closest_food)
+            closest_food = WhichFoodIsClosest(self.x, self.y)
+
+            yemek_cok_yakin_mi = self.isCloseEnoughToFood(self.burun_gucu, closest_food)
 
             #Yemek çok yakın, yemeğe direkt git hatta ısırabiliyorsan ısır
             if(yemek_cok_yakin_mi):
-                gidilecek_yol_kaldi_mi = calculate_Direct_GoingDirection(self.position, self.velocity, closest_food)
+
+                calculate_Direct_GoingDirection(closest_food.x, closest_food.y, self)
+
                 #Yemeğe direk gitme hesaplamasını yap, ısırabiliyorsan ısır ve eve dönüş state'lerini vs yap
-                if(not gidilecek_yol_kaldi_mi):
-                    Food_and_Nest_Lists.bite(closest_food)
+                if(not self.gidilecek_yol_kaldi_mi):
+                    Bite(closest_food)
 
 
             #Yemek uzakta, en yakın yemek feromonunu bul sonra yemege git.
             else:
+                """
                 #food döndürülmeli, okunmamalı
                 yemek_feromon_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(True, self.position, closest_food)
             
@@ -75,8 +95,8 @@ class Ant:
                 if(yemek_feromon_kokusu_aldi_mi):
                     #Random gitmeyi vs hallet
                     calculate_Noisy_GoingDirection(self.position, self.velocity, closest_food.position)
-                else:
-                    Random_Travel()
+                else:"""
+                Random_Travel(self)
 
 
         # Ev ara
@@ -96,82 +116,20 @@ class Ant:
                 if(ev_kokusu_aldi_mi):
                     calculate_Noisy_GoingDirection(self.position, self.velocity)
                 else:
-                    Random_Travel()
+                    Random_Travel(self)
 
         
             
-        self.UpdateVelocity(closest_food, pheromones)
-        self.velocity = self.velocity.Scale(self.max_speed)
+        #self.UpdateVelocity(closest_food, pheromones)
+        #self.velocity = self.velocity.Scale(self.max_speed)
         # self.position += self.velocity.Normalize()  * dt * self.max_speed
-        self.position += self.velocity
-        self.angle = self.velocity.Heading()
+        #self.position += self.velocity
+        #self.angle = self.velocity.Heading()
 
 
-##OLD ANT!
+#old codes
 
-##Change this class later!
-
-class AbstractAnt:
-    def __init__(self, max_vel, rotation_vel):
-        self.img = self.IMG
-        self.max_vel = max_vel
-        self.vel = 0
-        self.rotation_vel = rotation_vel
-        self.angle = random.randint(0,360)
-        self.x, self.y = self.START_POS
-
-        self.acceleration = 0.4
-        self.timesTurnLeft=0
-        self.timesTurnRight=0
-        self.timesNoTurn=0
-
-    def draw(self, win):
-        blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
-
-
-##  OLD ANT CLASS! FIX THESE
-
-import random
-import pygame
-import time
-import random
-import math
-import ant
-from utils import scale_image, blit_rotate_center
-
-
-
-
-ANT = scale_image(pygame.image.load("ant.png"), 0.4)
-FOOD = scale_image(pygame.image.load("food.png"), 1)
-
-WIDTH, HEIGHT = 1366, 768
-class tryAnt(AbstractAnt):
-    IMG = ANT
-    START_POS = (WIDTH / 2, HEIGHT / 2)
-
-
-
-
-
-
-##DON'T USE THESE FUNCTIONS BELOW!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"""
     def ReturnToNest(self, pheromone):
         if Vector.WithinRange(self.position, self.nest.position, self.nest.radius):
             self.has_food = False
@@ -246,3 +204,4 @@ class Scavenger:
         displacement = displacement.SetAngle(self.wander_angle)
         self.wander_angle += random.uniform(0, 1) * self.wander_delta_angle - self.wander_delta_angle * 0.5
         return pos + displacement
+"""
