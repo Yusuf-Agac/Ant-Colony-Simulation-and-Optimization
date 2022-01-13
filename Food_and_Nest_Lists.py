@@ -48,11 +48,11 @@ def Bite(Food, theAnt):
     Food:food
     theAnt.state = 2
     Food.size -= 1
-    print(Food.size)
+    print("The Ant Bite The Food")
     theAnt.gidilecek_yol_kaldi_mi = True
     
     if Food.size <= 0:
-        print("wefwefwefwfe")
+        print("Food is done")
         print(Food)
         FoodList.remove(Food)
         del Food
@@ -77,7 +77,7 @@ class nest:
 def StockTheFood(Nest, theAnt):
         Nest.sizeOfFoodStocks += 1
         theAnt.gidilecek_yol_kaldi_mi = True
-        theAnt.state = print("zaa")
+        theAnt.state = print("The Ant Stock The Food")
         theAnt.state = 1
 
 def WhichNestIsClosest(position):
