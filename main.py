@@ -27,11 +27,6 @@ while run:
         if event.type == pygame.QUIT:
             run = False
             break
-        
-    angle : int = 0
-    #print(angle)
-    angle_inradians :float = calculate_Noisy_GoingDirection(None, angle)
-    #print(angle, angle_inradians)
     
     WORLDMANAGER.update_and_draw()
     

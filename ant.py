@@ -28,8 +28,8 @@ from utils import *
 #self, mainWIN, world (parameters)
 class Ant:
     def __init__(self, mainWIN, world):
-        #self.mainWin = mainWIN
-        #self.world : WorldManagement.World = world
+        self.mainWin : pygame.Surface = mainWIN
+        self.world : WorldManagement.World = world
         self.position = [WIDTH / 2, HEIGHT / 2]
 
         self.velocity = 2
@@ -50,6 +50,8 @@ class Ant:
         self.img = scale_image(pygame.image.load("ant.png"), 0.4)
 
         self.gidilecek_yol_kaldi_mi = True
+        self.remembered_nest : nest = None
+        self.remembered_food : food = None
 
     def draw(self, win):
         blit_rotate_center(win, self.img, self.position, self.angle)
@@ -98,11 +100,12 @@ class Ant:
                 #Yemeğe direk gitme hesaplamasını yap, ısırabiliyorsan ısır ve eve dönüş state'lerini vs yap
                 if(not self.gidilecek_yol_kaldi_mi):
                     Bite(closest_food, self)
+                    self.remembered_food = closest_food
 
 
             #Yemek uzakta, en yakın yemek feromonunu bul sonra yemege git.
             else:
-                """
+                
                 #food döndürülmeli, okunmamalı
                 yemek_feromon_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(True, self.position, closest_food)
             
@@ -110,9 +113,12 @@ class Ant:
                 #Yakında yemek feromonu buldu, yemege gidiyor
                 if(yemek_feromon_kokusu_aldi_mi):
                     #Random gitmeyi vs hallet
-                    calculate_Noisy_GoingDirection(self.position, self.velocity, closest_food.position)
-                else:"""
-                Random_Travel(self)
+                    calculate_Noisy_GoingDirection(self.position, self.angle, closest_food.position)
+                    self.mainWin.set_at((int(self.position[0]), int(self.position[1])), (0,0, 0))
+                else:
+                    Random_Travel(self)
+                    if(not self.remembered_nest == None):
+                        self.world.map_of_pheromones.setPheromone(False, self.position, self.remembered_nest)
 
 
         # Ev ara
@@ -133,14 +139,16 @@ class Ant:
 
             #Yakında ev yok, ev feromonu ara
             else:
-                """
+                
                 ev_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(False, self.position, closest_nest)
 
                 if(ev_kokusu_aldi_mi):
                     calculate_Noisy_GoingDirection(self.position, self.angle)
-                    print(self.angle)
-                else:"""
-                Random_Travel(self)
+                    self.mainWin.set_at((self.position[0], self.position[1]), (255,255, 255))
+                else:
+                    Random_Travel(self)
+                    if(not self.remembered_food == None):
+                        self.world.map_of_pheromones.setPheromone(True, self.position, self.remembered_food)
 
         
             
@@ -150,82 +158,3 @@ class Ant:
         #self.position += self.velocity
         #self.angle = self.velocity.Heading()
 
-
-#old codes
-
-"""
-    def ReturnToNest(self, pheromone):
-        if Vector.WithinRange(self.position, self.nest.position, self.nest.radius):
-            self.has_food = False
-            self.nest.stock += 1
-            self.color = white
-            # self.angle = -self.velocity.Heading()
-            return
-        self.velocity += self.scavenger.Seek(self.position, self.nest.position, self.velocity, self.max_speed)
-        # add some randomness to have some more realistic movement
-        wander_force = self.scavenger.Wander(self.velocity)
-        self.velocity += (wander_force * 0.5)
-        pher_direction = self.velocity.Negate()
-
-        pheromone.AppendPheromone(self.position, pher_direction ,"food")
-
-    def SearchForFood(self, closest_food, pheromone):
-        dist = Vector.GetDistance(self.position, closest_food.position)
-
-        if dist < self.trigger_radius:
-            self.TakeFood(closest_food)
-        elif dist < self.smell_radius:
-            self.Step(closest_food, pheromone)
-        else:
-            self.FollowPheromoneOrWander(pheromone)
-
-        pheromone.AppendPheromone(self.position, self.velocity, "home")
-
-    def UpdateVelocity(self, closest_food, pheromone):
-        if self.has_food == True:
-            self.ReturnToNest(pheromone)
-        else:
-            self.SearchForFood(closest_food, pheromone)
-
-
-    def TakeFood(self, closest_food):
-        self.has_food = True
-        self.isFollowingTrail = False
-        self.color = (220, 130 , 30)
-        closest_food.Bite()
-
-    def Step(self, closest_food, pheromone):
-        self.velocity += self.scavenger.Seek(self.position, closest_food.position, self.velocity, self.max_speed)
-
-    def FollowPheromoneOrWander(self, pheromone):
-        pheromone_direction = pheromone.PheromoneDirection(self.position, self.smell_radius, "food")
-        pheromone_direction = pheromone_direction.Scale(self.max_speed)
-        self.velocity = pheromone_direction
-        self.velocity += self.scavenger.Wander(self.velocity)
-        # pheromone.AppendPheromone(self.position, self.velocity, "home")
-
-
-
-    def Show(self, screen):
-        blit_rotate_center(self.mainWin, self.img, (self.x, self.y), self.angle)
-
-class Scavenger:
-    def __init__(self):
-        self.wander_distance = 20
-        self.wander_radius = 10
-        self.wander_angle = 1
-        self.wander_delta_angle = pi/4
-
-    def Seek(self, position, target, velocity, max_speed):
-        diff = target - position
-        diff = diff.Scale(max_speed)
-        return diff - velocity
-
-    def Wander(self, velocity):
-        pos = velocity.Copy()
-        pos = pos.Scale(self.wander_distance)
-        displacement = Vector(0, -1).Scale(self.wander_radius)
-        displacement = displacement.SetAngle(self.wander_angle)
-        self.wander_angle += random.uniform(0, 1) * self.wander_delta_angle - self.wander_delta_angle * 0.5
-        return pos + displacement
-"""
