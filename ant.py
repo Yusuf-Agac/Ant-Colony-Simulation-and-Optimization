@@ -30,7 +30,7 @@ class Ant:
     def __init__(self, mainWIN, world):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.x, self.y = (WIDTH / 2, HEIGHT / 2)
+        self.position = (WIDTH / 2, HEIGHT / 2)
 
         self.velocity = 2
         self.maxVel = 3
@@ -52,7 +52,7 @@ class Ant:
         self.gidilecek_yol_kaldi_mi = True
 
     def draw(self, win):
-        blit_rotate_center(win, self.img, (self.x, self.y), self.angle)
+        blit_rotate_center(win, self.img, self.position, self.angle)
 
     def isCloseEnoughToFood(self, burun_gucu, closestFood):
 
@@ -66,7 +66,6 @@ class Ant:
             return True
 
 
-    #DIKKAT DIKKAT DIKKAT test icin kisa sureli "def Update(self, pheromones):" parametreleri def Update(self): yapildi
     def Update(self):
         # Yemek ara
         if(self.state == 1):
@@ -114,7 +113,8 @@ class Ant:
                 ev_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(False, self.position, closest_nest)
 
                 if(ev_kokusu_aldi_mi):
-                    calculate_Noisy_GoingDirection(self.position, self.velocity)
+                    calculate_Noisy_GoingDirection(self.position, self.angle)
+                    print(self.angle)
                 else:
                     Random_Travel(self)
 

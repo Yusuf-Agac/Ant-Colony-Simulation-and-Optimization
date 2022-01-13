@@ -1,6 +1,7 @@
 import pygame
 import WorldManagement
 from utils import scale_image, blit_rotate_center
+from noisy_goingdirection import calculate_Noisy_GoingDirection
 
 BLACK = (0, 0 ,0)
 GRAY = (150, 150, 150)
@@ -26,6 +27,11 @@ while run:
         if event.type == pygame.QUIT:
             run = False
             break
+        
+    angle : int = 0
+    print(angle)
+    angle_inradians :float = calculate_Noisy_GoingDirection(None, angle)
+    print(angle, angle_inradians)
     
     WORLDMANAGER.update_and_draw()
     
