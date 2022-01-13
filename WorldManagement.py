@@ -17,6 +17,7 @@ rotateVel = 0.7
 maxVel = 2
 antAmount = 100
 foodAmount = 1
+nestAmount = 1
 
 class World:
     def __init__(self, WIN) -> None:
@@ -32,6 +33,9 @@ class World:
         for food_i in range(antAmount):
             FoodList.append(food())
 
+        for nest_i in range(nestAmount):
+            NestList.append(nest())
+
     def update_and_draw(self):
         for ant in self.ants:
             ant.draw(self.win)
@@ -40,10 +44,11 @@ class World:
         for food in FoodList:
             food.draw(self.win)
 
+        for nest in NestList:
+            nest.draw(self.win)
+
         pygame.display.update()
 
-        for ant in self.ants:
-            random_ant_movement.Random_Travel(ant)
         
 
     def add_Food(self, food_pos, food_scentrange):

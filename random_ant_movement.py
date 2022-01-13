@@ -48,18 +48,18 @@ def Random_Travel(ant):
         vertical = math.cos(radians) * ant.velocity
         horizontal = math.sin(radians) * ant.velocity
 
-        ant.y -= vertical
-        ant.x -= horizontal
+        ant.position[1] -= vertical
+        ant.position[0] -= horizontal
 
 
     #this code block is an obstacle for curves of window
-    if(ant.x<-40):
+    if(ant.position[0]<-40):
         ant.angle = 270;
-    if(ant.x>1400):
+    if(ant.position[0]>1400):
         ant.angle = 90;
-    if(ant.y<-40):
+    if(ant.position[1]<-40):
         ant.angle = 180;
-    if(ant.y>800):
+    if(ant.position[1]>800):
         ant.angle = 0;
         
     if not moved:
@@ -69,8 +69,8 @@ def Random_Travel(ant):
         vertical = math.cos(radians) * ant.velocity
         horizontal = math.sin(radians) * ant.velocity
 
-        ant.y -= vertical
-        ant.x -= horizontal
+        ant.position[1] -= vertical
+        ant.position[0] -= horizontal
 
 
 #Hedefi yok, random gez

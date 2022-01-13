@@ -4,7 +4,7 @@ from utils import scale_image, blit_rotate_center
 from noisy_goingdirection import calculate_Noisy_GoingDirection
 
 BLACK = (0, 0 ,0)
-GRAY = (150, 150, 150)
+GRAY = (210, 170, 109)
 
 
 WIDTH, HEIGHT = 1366, 768
@@ -29,9 +29,9 @@ while run:
             break
         
     angle : int = 0
-    print(angle)
+    #print(angle)
     angle_inradians :float = calculate_Noisy_GoingDirection(None, angle)
-    print(angle, angle_inradians)
+    #print(angle, angle_inradians)
     
     WORLDMANAGER.update_and_draw()
     

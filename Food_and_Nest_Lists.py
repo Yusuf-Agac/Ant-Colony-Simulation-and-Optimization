@@ -7,19 +7,16 @@ import WorldManagement
 from utils import *
 from typing import List
 
-def bite(nearFood):
-    nearFood.Bite()
-
 
 
 class food:
     def __init__(self):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.position = (700, 250)
+        self.position = [700, 250]
         self.angle = 0
         self.size = 2
-        self.img = scale_image(pygame.image.load("food.png"), 1)
+        self.img = scale_image(pygame.image.load("food.png"), 3)
     
     def draw(self, win):
         blit_rotate_center(win, self.img, self.position, self.angle)
@@ -31,14 +28,14 @@ FoodList : List[food] = []
 
 
 
-def WhichFoodIsClosest(x, y):
-        theClosest = food()
+def WhichFoodIsClosest(position):
+        theClosest = None
         closestLen = 9999999999999999999
 
         for food_i in range(len(FoodList)):
 
-            waysXlength = FoodList[food_i].x - x
-            waysYlength = FoodList[food_i].y - y
+            waysXlength = FoodList[food_i].position[0] - position[0]
+            waysYlength = FoodList[food_i].position[1] - position[1]
             theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
             
             if theLength < closestLen:
@@ -50,9 +47,14 @@ def WhichFoodIsClosest(x, y):
 def Bite(Food, theAnt):
     Food.size -= 1
     theAnt.gidilecek_yol_kaldi_mi = True
-    #theAnt.state = 2
+    print("BITE BITE BITE")
     if Food.size <= 0:
         FoodList.remove(Food)
+        del Food
+        print("DELETE DELETE DELETE")
+        #print(Food.size)
+
+    #theAnt.state = 2
 
 
 
@@ -62,13 +64,34 @@ class nest:
     def __init__(self):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.position = (700, 250)
+        self.position = [1000, 250]
         self.angle = 0
+        self.sizeOfFoodStocks = 0
         self.img = scale_image(pygame.image.load("nest.png"), 1)
     
     def draw(self, win):
         blit_rotate_center(win, self.img, self.position, self.angle)
     
+def StockTheFood(Nest, theAnt):
+        Nest.sizeOfFoodStocks += 1
+        theAnt.gidilecek_yol_kaldi_mi = True
+        #theAnt.state = 1
+
+def WhichNestIsClosest(position):
+        theClosest = None
+        closestLen = 9999999999999999999
+
+        for nest_i in range(len(NestList)):
+
+            waysXlength = NestList[nest_i].position[0] - position[0]
+            waysYlength = NestList[nest_i].position[1] - position[1]
+            theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
+            
+            if theLength < closestLen:
+                closestLen = theLength
+                theClosest = NestList[nest_i]
+
+        return theClosest
 
     
 

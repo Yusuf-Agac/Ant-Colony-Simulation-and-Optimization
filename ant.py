@@ -30,7 +30,7 @@ class Ant:
     def __init__(self, mainWIN, world):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.position = (WIDTH / 2, HEIGHT / 2)
+        self.position = [WIDTH / 2, HEIGHT / 2]
 
         self.velocity = 2
         self.maxVel = 3
@@ -56,8 +56,25 @@ class Ant:
 
     def isCloseEnoughToFood(self, burun_gucu, closestFood):
 
-        waysXlength = closestFood.x - self.x
-        waysYlength = closestFood.y - self.y
+        if closestFood is None:
+            return False
+
+        waysXlength = closestFood.position[0] - self.position[0]
+        waysYlength = closestFood.position[1] - self.position[1]
+        theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
+        
+        if theLength > burun_gucu:
+            return False
+        else:
+            return True
+
+    def isCloseEnoughToNest(self, burun_gucu, closestNest):
+
+        if closestNest is None:
+            return False
+
+        waysXlength = closestNest.position[0] - self.position[0]
+        waysYlength = closestNest.position[1] - self.position[1]
         theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
         
         if theLength > burun_gucu:
@@ -69,14 +86,14 @@ class Ant:
     def Update(self):
         # Yemek ara
         if(self.state == 1):
-            closest_food = WhichFoodIsClosest(self.x, self.y)
+            closest_food = WhichFoodIsClosest(self.position)
 
             yemek_cok_yakin_mi = self.isCloseEnoughToFood(self.burun_gucu, closest_food)
 
             #Yemek çok yakın, yemeğe direkt git hatta ısırabiliyorsan ısır
             if(yemek_cok_yakin_mi):
 
-                calculate_Direct_GoingDirection(closest_food.x, closest_food.y, self)
+                calculate_Direct_GoingDirection(closest_food.position, self)
 
                 #Yemeğe direk gitme hesaplamasını yap, ısırabiliyorsan ısır ve eve dönüş state'lerini vs yap
                 if(not self.gidilecek_yol_kaldi_mi):
@@ -100,23 +117,30 @@ class Ant:
 
         # Ev ara
         elif(self.state == 2):
+
             closest_nest = None
-            cok_yakinda_ev_var_mi = nestList.getClosestNest(self.position, closest_nest)
+            closest_nest = WhichNestIsClosest(self.position)
+
+            cok_yakinda_ev_var_mi = self.isCloseEnoughToNest(self.burun_gucu, closest_nest)
+
             #Ev yakındaysa eve yönel, yemeği bırak
             if(cok_yakinda_ev_var_mi):
-                gidilecek_yol_kaldi_mi = calculate_Direct_GoingDirection(self.position, self.velocity, closest_nest.position)
-                if(not gidilecek_yol_kaldi_mi):
-                    Eve_Bırak_ve_Geri_Yola_Cık()
+                
+                calculate_Direct_GoingDirection(closest_nest.position, self)
+
+                if(not self.gidilecek_yol_kaldi_mi):
+                    StockTheFood(closest_nest, self)
 
             #Yakında ev yok, ev feromonu ara
             else:
+                """
                 ev_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(False, self.position, closest_nest)
 
                 if(ev_kokusu_aldi_mi):
                     calculate_Noisy_GoingDirection(self.position, self.angle)
                     print(self.angle)
-                else:
-                    Random_Travel(self)
+                else:"""
+                Random_Travel(self)
 
         
             

@@ -3,11 +3,11 @@ from math import pi, degrees, radians, sqrt, atan2
 
 #Belirtilen konumuna
 
-def calculate_Direct_GoingDirection(focusX, focusY, ant):
+def calculate_Direct_GoingDirection(focusPosition, ant):
     global stepAmount
 
-    waysXlength = focusX - ant.x
-    waysYlength = focusY - ant.y
+    waysXlength = focusPosition[0] - ant.position[0]
+    waysYlength = focusPosition[1] - ant.position[1]
 
     theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
 
@@ -30,5 +30,5 @@ def directStep(ant):
     vertical = math.cos(radians) * ant.velocity
     horizontal = math.sin(radians) * ant.velocity
 
-    ant.y -= vertical
-    ant.x -= horizontal
+    ant.position[1] -= vertical
+    ant.position[0] -= horizontal
