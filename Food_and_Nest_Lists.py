@@ -13,10 +13,10 @@ class food:
     def __init__(self):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.position = [700, 250]
+        self.position = [679, 300]
         self.angle = 0
-        self.size = 2
-        self.img = scale_image(pygame.image.load("food.png"), 3)
+        self.size = 30
+        self.img = scale_image(pygame.image.load("food.png"), 10)
     
     def draw(self, win):
         blit_rotate_center(win, self.img, self.position, self.angle)
@@ -45,16 +45,18 @@ def WhichFoodIsClosest(position):
         return theClosest
 
 def Bite(Food, theAnt):
+    Food:food
+    theAnt.state = 2
     Food.size -= 1
+    print(Food.size)
     theAnt.gidilecek_yol_kaldi_mi = True
-    print("BITE BITE BITE")
+    
     if Food.size <= 0:
+        print("wefwefwefwfe")
+        print(Food)
         FoodList.remove(Food)
         del Food
-        print("DELETE DELETE DELETE")
-        #print(Food.size)
-
-    #theAnt.state = 2
+        
 
 
 
@@ -75,7 +77,8 @@ class nest:
 def StockTheFood(Nest, theAnt):
         Nest.sizeOfFoodStocks += 1
         theAnt.gidilecek_yol_kaldi_mi = True
-        #theAnt.state = 1
+        theAnt.state = print("zaa")
+        theAnt.state = 1
 
 def WhichNestIsClosest(position):
         theClosest = None

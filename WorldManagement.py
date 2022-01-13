@@ -30,7 +30,7 @@ class World:
             self.ants.append(Ant(self.win, self))
         
         #fill do FOODLIST
-        for food_i in range(antAmount):
+        for food_i in range(foodAmount):
             FoodList.append(food())
 
         for nest_i in range(nestAmount):
