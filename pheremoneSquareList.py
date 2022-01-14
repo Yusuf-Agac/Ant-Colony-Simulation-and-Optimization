@@ -8,7 +8,7 @@ from utils import scale_image, blit_rotate_center
 from typing import List
 import parameters
 
-SQUAREAMOUNT = 50
+SQUAREAMOUNT = 125
 rectList = []
 
 class pheremoneRect:
@@ -53,18 +53,21 @@ def drawRectList(WIN):
         for i in range(SQUAREAMOUNT*SQUAREAMOUNT):
                 #draw
                 rectList[i].drawBlue(WIN)
+                rectList[i].drawRed(WIN)
+                rectList[i].blueAlphaNumber -= 1
+                rectList[i].redAlphaNumber -= 1
                         
                 
 def addBlueAlpha(index, GRIDSIZEX, GRIDSIZEY):
         index_y : int = int(index % GRIDSIZEX)
         index_x : int = int((index - index_y) / GRIDSIZEX)
 
-        if rectList[int(((SQUAREAMOUNT - index_y - 1) * SQUAREAMOUNT) + (SQUAREAMOUNT - index_x - 1))].blueAlphaNumber<255:
-                rectList[int((index_y * GRIDSIZEX) + (index_x))].blueAlphaNumber += 3
+        if rectList[int((index_y * GRIDSIZEX) + (index_x))].blueAlphaNumber<255:
+                rectList[int((index_y * GRIDSIZEX) + (index_x))].blueAlphaNumber += 255
 
 def addRedAlpha(index, GRIDSIZEX, GRIDSIZEY):
         index_y : int = int(index % GRIDSIZEX)
         index_x : int = int((index - index_y) / GRIDSIZEX)
-
-        if rectList[int(((SQUAREAMOUNT - index_y - 1) * SQUAREAMOUNT) + (SQUAREAMOUNT - index_x - 1))].redAlphaNumber<255:
-                rectList[int((index_y * GRIDSIZEX) + (index_x))].redAlphaNumber += 3
+        
+        if rectList[int((index_y * GRIDSIZEX) + (index_x))].redAlphaNumber<255:
+                rectList[int((index_y * GRIDSIZEX) + (index_x))].redAlphaNumber += 255

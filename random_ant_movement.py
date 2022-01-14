@@ -1,12 +1,14 @@
+import imp
 import math
 import random
+from parameters import *
 
 def Random_Travel(ant):
 
     turningTimesAmount = 5
     turningMinus = 0.1
     
-    ant.maxVel = random.uniform(1.5, 7.5)
+    ant.maxVel = random.uniform(1.5, 3.5)
     ant.rotationVel = random.uniform(0.7, 1.7)
     ant.acceleration = random.uniform(0.4, 0.8)
     
@@ -55,11 +57,11 @@ def Random_Travel(ant):
     #this code block is an obstacle for curves of window
     if(ant.position[0]<-40):
         ant.angle = 270;
-    if(ant.position[0]>1400):
+    if(ant.position[0]>width+20):
         ant.angle = 90;
     if(ant.position[1]<-40):
         ant.angle = 180;
-    if(ant.position[1]>800):
+    if(ant.position[1]>height+20):
         ant.angle = 0;
         
     if not moved:

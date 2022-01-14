@@ -13,7 +13,7 @@ class food:
     def __init__(self):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.position = [30, 700]
+        self.position = [300, 300]
         self.angle = 0
         self.size = 100000
         self.img = scale_image(pygame.image.load("food.png"), 5)
