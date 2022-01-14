@@ -30,7 +30,7 @@ class Ant:
     def __init__(self, mainWIN, world):
         self.mainWin : pygame.Surface = mainWIN
         self.world : WorldManagement.World = world
-        self.position = [WIDTH / 2, HEIGHT / 2]
+        self.position = [1032, 282]
 
         self.velocity = 2
         self.maxVel = 3
@@ -109,14 +109,16 @@ class Ant:
                 #food döndürülmeli, okunmamalı
                 yemek_feromon_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(True, self.position, closest_food)
             
-
+                
                 #Yakında yemek feromonu buldu, yemege gidiyor
                 if(yemek_feromon_kokusu_aldi_mi):
                     #Random gitmeyi vs hallet
-                    calculate_Noisy_GoingDirection(self.position, self.angle, closest_food.position)
+                    if(closest_food is not None):
+                        calculate_Noisy_GoingDirection(self, closest_food)
                     self.mainWin.set_at((int(self.position[0]), int(self.position[1])), (0,0, 0))
                 else:
                     Random_Travel(self)
+                
                     if(not self.remembered_nest == None):
                         self.world.map_of_pheromones.setPheromone(False, self.position, self.remembered_nest)
 
@@ -143,13 +145,14 @@ class Ant:
                 ev_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(False, self.position, closest_nest)
 
                 if(ev_kokusu_aldi_mi):
-                    calculate_Noisy_GoingDirection(self.position, self.angle)
+                    calculate_Noisy_GoingDirection(self, closest_nest)
                     self.mainWin.set_at((self.position[0], self.position[1]), (255,255, 255))
                 else:
                     Random_Travel(self)
+                
                     if(not self.remembered_food == None):
                         self.world.map_of_pheromones.setPheromone(True, self.position, self.remembered_food)
-
+                    
         
             
         #self.UpdateVelocity(closest_food, pheromones)

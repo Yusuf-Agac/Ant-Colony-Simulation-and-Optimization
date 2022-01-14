@@ -13,10 +13,10 @@ class food:
     def __init__(self):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.position = [20, 30]
+        self.position = [700, 300]
         self.angle = 0
-        self.size = 30
-        self.img = scale_image(pygame.image.load("food.png"), 10)
+        self.size = 3
+        self.img = scale_image(pygame.image.load("food.png"), 1)
     
     def draw(self, win):
         blit_rotate_center(win, self.img, self.position, self.angle)
@@ -50,7 +50,7 @@ def Bite(Food, theAnt):
     Food.size -= 1
     print("The Ant Bite The Food")
     theAnt.gidilecek_yol_kaldi_mi = True
-    
+    theAnt.angle += 180
     if Food.size <= 0:
         print("Food is done")
         print(Food)

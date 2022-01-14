@@ -24,7 +24,7 @@ class pheromoneMap:
         else:
             self.GRID[index][0] = obj_ref
 
-    def getClosestPheromone(self, is_searching_for_food, pos, return_obj) -> bool:
+    def getClosestPheromone(self, is_searching_for_food, AntPos, return_obj) -> bool:
         pheromonetype : int = 0
         if(is_searching_for_food): 
             pheromonetype = 1
@@ -32,11 +32,11 @@ class pheromoneMap:
             pheromonetype = 0
 
 
-        index_y : int = int(pos[1] / (parameters.height / self.GRIDSIZEY))
+        index_y : int = int(AntPos[1] / (parameters.height / self.GRIDSIZEY))
         if(index_y < 0 or index_y >= self.GRIDSIZEY):
             return_obj = None
             return False
-        index_x : int = int((pos[0] / (parameters.width / self.GRIDSIZEX)))
+        index_x : int = int((AntPos[0] / (parameters.width / self.GRIDSIZEX)))
         if(index_x < 0 or index_x >= self.GRIDSIZEX):
             return_obj = None
             return False
@@ -46,3 +46,6 @@ class pheromoneMap:
             return False
         else:
             return True
+    
+    def Update():
+        pass

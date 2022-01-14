@@ -2,12 +2,13 @@ import pygame
 import WorldManagement
 from utils import scale_image, blit_rotate_center
 from noisy_goingdirection import calculate_Noisy_GoingDirection
+import parameters
 
 BLACK = (0, 0 ,0)
 GRAY = (210, 170, 109)
 
 
-WIDTH, HEIGHT = 1366, 768
+WIDTH, HEIGHT = parameters.width, parameters.height
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Ant Colony Optimisation!")
 

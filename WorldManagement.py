@@ -1,4 +1,5 @@
 from typing import AnyStr
+from main import WIN
 import pheromoneMap
 from Food_and_Nest_Lists import *
 from ant import *
@@ -16,8 +17,11 @@ from typing import List
 rotateVel = 0.7
 maxVel = 2
 antAmount = 100
-foodAmount = 1
+foodAmount = 3
 nestAmount = 1
+
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
 
 class World:
     def __init__(self, WIN) -> None:
@@ -47,11 +51,5 @@ class World:
         for nest in NestList:
             nest.draw(self.win)
 
+
         pygame.display.update()
-
-        
-
-    def add_Food(self, food_pos, food_scentrange):
-        pass
-
-
