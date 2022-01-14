@@ -24,10 +24,10 @@ class pheremoneRect:
                 
 
                 self.red_image = pygame.Surface(self.size, pygame.SRCALPHA)
-                self.redAlphaNumber = 1
+                self.redAlphaNumber = 0
 
                 self.blue_image = pygame.Surface(self.size, pygame.SRCALPHA)
-                self.blueAlphaNumber = 1
+                self.blueAlphaNumber = 0
                 
 
                 
@@ -52,15 +52,18 @@ for i in range(SQUAREAMOUNT):
 
 def drawRectList(WIN):
         for i in range(SQUAREAMOUNT*SQUAREAMOUNT):
-                
+                #vaporize
+                rectList[i].redAlphaNumber -= 0.3
+                rectList[i].blueAlphaNumber -= 0.3
+                #draw
                 rectList[i].drawRed(WIN)
                 rectList[i].drawBlue(WIN)
                         
 
-def addRedAlpha(index_x, index_y):
-        if rectList[int((index_y * SQUAREAMOUNT) + index_x)].redAlphaNumber < 255:
-                rectList[int((index_y * SQUAREAMOUNT) + index_x)].self.red_image.set_alpha(100)
+def addRedAlpha(index):
+        if rectList[index].redAlphaNumber<255:
+                rectList[index].redAlphaNumber += 1
                 
-def addBlueAlpha(index_x, index_y):
-        if rectList[int((index_y * SQUAREAMOUNT) + index_x)].blueAlphaNumber < 255:
-                rectList[int((index_y * SQUAREAMOUNT) + index_x)].self.blue_image.set_alpha(100)
+def addBlueAlpha(index):
+        if rectList[index].blueAlphaNumber<255:
+                rectList[index].blueAlphaNumber += 1

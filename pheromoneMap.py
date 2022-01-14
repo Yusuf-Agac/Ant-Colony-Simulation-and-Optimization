@@ -22,10 +22,10 @@ class pheromoneMap:
         index : int = int((index_y * self.GRIDSIZEX) + index_x)
         if(theAnt.state==2):
             self.GRID[index][1] = theAnt.remembered_food
-            #addRedAlpha(index_x, index_y)
+            addRedAlpha(index)
         if(theAnt.state==1):
             self.GRID[index][0] = theAnt.remembered_nest
-            #addBlueAlpha(index_x, index_y)
+            addBlueAlpha(index)
 
     def getClosestPheromone(self, is_searching_for_food, AntPos, return_obj) -> bool:
         #pheromonetype : int = 0

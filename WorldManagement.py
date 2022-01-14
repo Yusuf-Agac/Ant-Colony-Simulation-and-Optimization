@@ -25,7 +25,7 @@ nestAmount = 1
 class World:
     def __init__(self, WIN) -> None:
         self.win = WIN
-        self.map_of_pheromones : pheromoneMap.pheromoneMap = pheromoneMap.pheromoneMap(200,200)
+        self.map_of_pheromones : pheromoneMap.pheromoneMap = pheromoneMap.pheromoneMap(pheremoneSquareList.SQUAREAMOUNT,pheremoneSquareList.SQUAREAMOUNT)
         self.ants:List[Ant] = list()
 
         #fill do NestList
@@ -44,6 +44,7 @@ class World:
     def update_and_draw(self):
 
         pheremoneSquareList.drawRectList(self.win)
+        
 
         for nest in NestList:
             nest.draw(self.win)
