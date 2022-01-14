@@ -2,12 +2,11 @@ from turtle import position
 from typing import AnyStr
 from Food_and_Nest_Lists import *
 from ant import *
-import random
 import pygame
 import random
 from utils import scale_image, blit_rotate_center
 from typing import List
-
+import parameters
 
 SQUAREAMOUNT = 50
 rectList = []
@@ -46,25 +45,26 @@ class pheremoneRect:
 
 for i in range(SQUAREAMOUNT):
         for j in range(SQUAREAMOUNT):
-                position = (width/SQUAREAMOUNT * (i), height/SQUAREAMOUNT * (j))
+                position = (((i) * (width / SQUAREAMOUNT)), ((j) * (height / SQUAREAMOUNT)))
                 rectList.append(pheremoneRect(position))
 
 
 def drawRectList(WIN):
         for i in range(SQUAREAMOUNT*SQUAREAMOUNT):
-                #vaporize
-                rectList[i].redAlphaNumber -= 1
-                rectList[i].blueAlphaNumber -= 1
                 #draw
-                rectList[i].drawRed(WIN)
                 rectList[i].drawBlue(WIN)
                         
-
-def addRedAlpha(index, GRID):
-        if rectList[len(GRID) - index].redAlphaNumber<255:
-                rectList[len(GRID) - index].redAlphaNumber += 3
                 
-def addBlueAlpha(index, GRID):
+def addBlueAlpha(index, GRIDSIZEX, GRIDSIZEY):
+        index_y : int = int(index % GRIDSIZEX)
+        index_x : int = int((index - index_y) / GRIDSIZEX)
 
-        if rectList[GRID - index].blueAlphaNumber<255:
-                rectList[GRID - index].blueAlphaNumber += 3
+        if rectList[int(((SQUAREAMOUNT - index_y - 1) * SQUAREAMOUNT) + (SQUAREAMOUNT - index_x - 1))].blueAlphaNumber<255:
+                rectList[int((index_y * GRIDSIZEX) + (index_x))].blueAlphaNumber += 3
+
+def addRedAlpha(index, GRIDSIZEX, GRIDSIZEY):
+        index_y : int = int(index % GRIDSIZEX)
+        index_x : int = int((index - index_y) / GRIDSIZEX)
+
+        if rectList[int(((SQUAREAMOUNT - index_y - 1) * SQUAREAMOUNT) + (SQUAREAMOUNT - index_x - 1))].redAlphaNumber<255:
+                rectList[int((index_y * GRIDSIZEX) + (index_x))].redAlphaNumber += 3

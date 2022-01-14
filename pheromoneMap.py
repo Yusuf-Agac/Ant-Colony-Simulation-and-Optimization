@@ -11,6 +11,8 @@ class pheromoneMap:
             self.GRID.append([None, None])
 
 
+
+
     def setPheromone(self, theAnt):
         index_y : int = int(theAnt.position[1] / (parameters.height / self.GRIDSIZEY))
         if(index_y < 0 or index_y >= self.GRIDSIZEY - 1):
@@ -22,10 +24,10 @@ class pheromoneMap:
         index : int = int((index_y * self.GRIDSIZEX) + index_x)
         if(theAnt.state==2):
             self.GRID[index][1] = theAnt.remembered_food
-            addRedAlpha(index, len(self.GRID))
+            addRedAlpha(index, self.GRIDSIZEX, self.GRIDSIZEY)
         if(theAnt.state==1):
             self.GRID[index][0] = theAnt.remembered_nest
-            addBlueAlpha(index, len(self.GRID))
+            addBlueAlpha(index, self.GRIDSIZEX, self.GRIDSIZEY)
 
     def getClosestPheromone(self, is_searching_for_food, AntPos, return_obj) -> bool:
         #pheromonetype : int = 0
