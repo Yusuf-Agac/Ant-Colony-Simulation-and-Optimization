@@ -1,5 +1,4 @@
 from typing import AnyStr
-from main import WIN
 import pheromoneMap
 from Food_and_Nest_Lists import *
 from ant import *
