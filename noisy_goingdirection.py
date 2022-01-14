@@ -1,24 +1,25 @@
 from cmath import atan
-from math import degrees, radians
+from math import atan2, degrees, pi, radians
 import random
 import math
 
 #Neredeyse bir çizgi üzerinden en kısa yoldan git
 #Eger gidecek yol kalmadiysa false döndür
-def calculate_Noisy_GoingDirection(theAnt, theFood):
-    ant_to_food : float = [theFood.position[0] - theAnt.position[0], theFood.position[1] - theAnt.position[1]]
-    print(ant_to_food)
-    ant_to_food_degrees : float = degrees(math.atan2(ant_to_food[1], ant_to_food[0]))
+def calculate_Noisy_GoingDirection(theAnt, destination):
+    ant_to_food : float = [destination.position[0] - theAnt.position[0], destination.position[1] - theAnt.position[1]]
     
-    rand : float = (random.random() * (ant_to_food_degrees - theAnt.angle) * 3)
-    theAnt.angle = radians(rand + theAnt.angle)
+    rads = atan2(-ant_to_food[1], ant_to_food[0])
+    rads %= 2*pi
+    degs = degrees(rads)
+    ant_to_food_degrees = degs - 90
+
+    theAnt.angle = ant_to_food_degrees #radians(rand + theAnt.angle)
     
     step1(theAnt)
 
     
 
 def step1(theAnt):
-    print(theAnt.velocity)
     radians = math.radians(theAnt.angle)
     vertical = math.cos(radians) * theAnt.velocity
     horizontal = math.sin(radians) * theAnt.velocity

@@ -1,5 +1,6 @@
 from pygame import math
 import parameters
+from pheremoneSquareList import addBlueAlpha, addRedAlpha
 
 class pheromoneMap:
     def __init__(self, GridSizeX, GridSizeY):
@@ -10,22 +11,24 @@ class pheromoneMap:
             self.GRID.append([None, None])
 
 
-    def setPheromone(self, is_food_pheromone, pheromone_pos, obj_ref):
-        index_y : int = int(pheromone_pos[1] / (parameters.height / self.GRIDSIZEY))
+    def setPheromone(self, theAnt):
+        index_y : int = int(theAnt.position[1] / (parameters.height / self.GRIDSIZEY))
         if(index_y < 0 or index_y >= self.GRIDSIZEY - 1):
             return
-        index_x : int = int((pheromone_pos[0] / (parameters.width / self.GRIDSIZEX)))
+        index_x : int = int((theAnt.position[0] / (parameters.width / self.GRIDSIZEX)))
         if(index_x < 0 or index_x >= self.GRIDSIZEX - 1):
             return
         
         index : int = int((index_y * self.GRIDSIZEX) + index_x)
-        if(is_food_pheromone):
-            self.GRID[index][1] = obj_ref
-        else:
-            self.GRID[index][0] = obj_ref
+        if(theAnt.state==2):
+            self.GRID[index][1] = theAnt.remembered_food
+            #addRedAlpha(index_x, index_y)
+        if(theAnt.state==1):
+            self.GRID[index][0] = theAnt.remembered_nest
+            #addBlueAlpha(index_x, index_y)
 
     def getClosestPheromone(self, is_searching_for_food, AntPos, return_obj) -> bool:
-        pheromonetype : int = 0
+        #pheromonetype : int = 0
         if(is_searching_for_food): 
             pheromonetype = 1
         else:

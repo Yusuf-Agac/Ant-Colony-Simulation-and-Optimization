@@ -43,7 +43,7 @@ class Ant:
         self.timesNoTurn=0
 
         self.trigger_radius = 10
-        self.burun_gucu = 100
+        self.burun_gucu = 200
 
         self.angle = random.randint(0,360)
 
@@ -51,7 +51,7 @@ class Ant:
         self.img = scale_image(pygame.image.load("ant.png"), 0.4)
 
         self.gidilecek_yol_kaldi_mi = True
-        self.remembered_nest : nest = None
+        self.remembered_nest : nest = WhichNestIsClosest(self.position)
         self.remembered_food : food = None
 
     def draw(self, win):
@@ -90,7 +90,7 @@ class Ant:
         # Yemek ara
         if(self.state == 1):
             closest_food = WhichFoodIsClosest(self.position)
-
+            
             yemek_cok_yakin_mi = self.isCloseEnoughToFood(self.burun_gucu, closest_food)
 
             #Yemek çok yakın, yemeğe direkt git hatta ısırabiliyorsan ısır
@@ -119,13 +119,13 @@ class Ant:
                         calculate_Noisy_GoingDirection(self, closest_food)
                     else:
                         Random_Travel(self)
-                    self.mainWin.set_at((int(self.position[0]), int(self.position[1])), (0,0, 0))
+                    #self.mainWin.set_at((int(self.position[0]), int(self.position[1])), (0,0, 0))
 
                 else:
                     Random_Travel(self)
                 
                     if(not self.remembered_nest == None):
-                        self.world.map_of_pheromones.setPheromone(False, self.position, self.remembered_nest)
+                        self.world.map_of_pheromones.setPheromone(self)
 
 
         # Ev ara
@@ -143,6 +143,7 @@ class Ant:
 
                 if(not self.gidilecek_yol_kaldi_mi):
                     StockTheFood(closest_nest, self)
+                    self.remembered_nest = closest_nest
 
             #Yakında ev yok, ev feromonu ara
             else:
@@ -151,14 +152,13 @@ class Ant:
 
                 if(ev_kokusu_aldi_mi):
 
-                    if(closest_nest is not None):
-                        calculate_Noisy_GoingDirection(self, closest_nest)
-                    
-                    self.mainWin.set_at((self.position[0], self.position[1]), (255,255, 255))
+                    calculate_Noisy_GoingDirection(self, closest_nest)
+
+                    #self.mainWin.set_at((self.position[0], self.position[1]), (255,255, 255))
                 else:
                     Random_Travel(self)
                     if(not self.remembered_food == None):
-                        self.world.map_of_pheromones.setPheromone(True, self.position, self.remembered_food)
+                        self.world.map_of_pheromones.setPheromone(self)
         
             
         #self.UpdateVelocity(closest_food, pheromones)

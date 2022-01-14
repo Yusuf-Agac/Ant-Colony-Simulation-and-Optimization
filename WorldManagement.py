@@ -16,7 +16,7 @@ from typing import List
 #first parameter is speed secone one is turning speed
 rotateVel = 0.7
 maxVel = 2
-antAmount = 200
+antAmount = 500
 foodAmount = 1
 nestAmount = 1
 

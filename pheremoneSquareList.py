@@ -8,9 +8,9 @@ import random
 from utils import scale_image, blit_rotate_center
 from typing import List
 
-rectList = []
-SQUAREAMOUNT = 10
 
+SQUAREAMOUNT = 50
+rectList = []
 
 class pheremoneRect:
 #the four parameter is transparency
@@ -44,15 +44,23 @@ class pheremoneRect:
                 self.blue_image.set_alpha(self.blueAlphaNumber)
                 WIN.blit(self.blue_image, self.position)
 
-
 for i in range(SQUAREAMOUNT):
         for j in range(SQUAREAMOUNT):
                 position = (width/SQUAREAMOUNT * (i), height/SQUAREAMOUNT * (j))
                 rectList.append(pheremoneRect(position))
 
+
 def drawRectList(WIN):
         for i in range(SQUAREAMOUNT*SQUAREAMOUNT):
-                        rectList[i].drawRed(WIN)
-                        rectList[i].drawBlue(WIN)
                 
+                rectList[i].drawRed(WIN)
+                rectList[i].drawBlue(WIN)
+                        
+
+def addRedAlpha(index_x, index_y):
+        if rectList[int((index_y * SQUAREAMOUNT) + index_x)].redAlphaNumber < 255:
+                rectList[int((index_y * SQUAREAMOUNT) + index_x)].self.red_image.set_alpha(100)
                 
+def addBlueAlpha(index_x, index_y):
+        if rectList[int((index_y * SQUAREAMOUNT) + index_x)].blueAlphaNumber < 255:
+                rectList[int((index_y * SQUAREAMOUNT) + index_x)].self.blue_image.set_alpha(100)
