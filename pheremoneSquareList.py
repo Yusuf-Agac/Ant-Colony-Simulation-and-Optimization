@@ -8,7 +8,7 @@ from utils import scale_image, blit_rotate_center
 from typing import List
 import parameters
 
-SQUAREAMOUNT = 125
+SQUAREAMOUNT = 150
 rectList = []
 
 class pheremoneRect:
@@ -63,11 +63,11 @@ def addBlueAlpha(index, GRIDSIZEX, GRIDSIZEY):
         index_x : int = int((index - index_y) / GRIDSIZEX)
 
         if rectList[int((index_y * GRIDSIZEX) + (index_x))].blueAlphaNumber<255:
-                rectList[int((index_y * GRIDSIZEX) + (index_x))].blueAlphaNumber += 255
+                rectList[int((index_y * GRIDSIZEX) + (index_x))].blueAlphaNumber = 255
 
 def addRedAlpha(index, GRIDSIZEX, GRIDSIZEY):
         index_y : int = int(index % GRIDSIZEX)
         index_x : int = int((index - index_y) / GRIDSIZEX)
         
         if rectList[int((index_y * GRIDSIZEX) + (index_x))].redAlphaNumber<255:
-                rectList[int((index_y * GRIDSIZEX) + (index_x))].redAlphaNumber += 255
+                rectList[int((index_y * GRIDSIZEX) + (index_x))].redAlphaNumber = 255

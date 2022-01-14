@@ -31,7 +31,7 @@ class Ant:
     def __init__(self, mainWIN, world):
         self.mainWin : pygame.Surface = mainWIN
         self.world : WorldManagement.World = world
-        self.position = [1000, 250]
+        self.position = [900, 250]
 
         self.velocity = 2
         self.maxVel = 3
