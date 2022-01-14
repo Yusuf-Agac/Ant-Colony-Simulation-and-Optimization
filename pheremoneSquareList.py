@@ -9,7 +9,7 @@ from utils import scale_image, blit_rotate_center
 from typing import List
 
 rectList = []
-SQUAREAMOUNT = 100
+SQUAREAMOUNT = 10
 
 
 class pheremoneRect:
@@ -24,10 +24,10 @@ class pheremoneRect:
                 
 
                 self.red_image = pygame.Surface(self.size, pygame.SRCALPHA)
-                self.redAlphaNumber = 10
+                self.redAlphaNumber = 1
 
                 self.blue_image = pygame.Surface(self.size, pygame.SRCALPHA)
-                self.blueAlphaNumber = 10
+                self.blueAlphaNumber = 1
                 
 
                 

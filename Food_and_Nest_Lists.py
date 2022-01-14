@@ -13,10 +13,10 @@ class food:
     def __init__(self):
         #self.mainWin = mainWIN
         #self.world : WorldManagement.World = world
-        self.position = [700, 300]
+        self.position = [30, 700]
         self.angle = 0
-        self.size = 3
-        self.img = scale_image(pygame.image.load("food.png"), 1)
+        self.size = 25
+        self.img = scale_image(pygame.image.load("food.png"), 5)
     
     def draw(self, win):
         blit_rotate_center(win, self.img, self.position, self.angle)

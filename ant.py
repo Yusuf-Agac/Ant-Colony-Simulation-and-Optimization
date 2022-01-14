@@ -43,7 +43,7 @@ class Ant:
         self.timesNoTurn=0
 
         self.trigger_radius = 10
-        self.burun_gucu = 50
+        self.burun_gucu = 100
 
         self.angle = random.randint(0,360)
 
@@ -114,9 +114,13 @@ class Ant:
                 #Yakında yemek feromonu buldu, yemege gidiyor
                 if(yemek_feromon_kokusu_aldi_mi):
                     #Random gitmeyi vs hallet
+                    
                     if(closest_food is not None):
                         calculate_Noisy_GoingDirection(self, closest_food)
+                    else:
+                        Random_Travel(self)
                     self.mainWin.set_at((int(self.position[0]), int(self.position[1])), (0,0, 0))
+
                 else:
                     Random_Travel(self)
                 
@@ -146,14 +150,15 @@ class Ant:
                 ev_kokusu_aldi_mi = self.world.map_of_pheromones.getClosestPheromone(False, self.position, closest_nest)
 
                 if(ev_kokusu_aldi_mi):
-                    calculate_Noisy_GoingDirection(self, closest_nest)
+
+                    if(closest_nest is not None):
+                        calculate_Noisy_GoingDirection(self, closest_nest)
+                    
                     self.mainWin.set_at((self.position[0], self.position[1]), (255,255, 255))
                 else:
                     Random_Travel(self)
-                    """
                     if(not self.remembered_food == None):
-                        self.world.map_of_pheromones.setPheromone(True, self.position, self.remembered_food)"""
-                    
+                        self.world.map_of_pheromones.setPheromone(True, self.position, self.remembered_food)
         
             
         #self.UpdateVelocity(closest_food, pheromones)
