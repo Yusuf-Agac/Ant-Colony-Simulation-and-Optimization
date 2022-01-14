@@ -6,7 +6,7 @@ def Random_Travel(ant):
     turningTimesAmount = 5
     turningMinus = 0.1
     
-    ant.maxVel = random.uniform(1.5, 2.5)
+    ant.maxVel = random.uniform(1.5, 4.5)
     ant.rotationVel = random.uniform(0.7, 1.7)
     ant.acceleration = random.uniform(0.4, 0.8)
     

@@ -72,11 +72,12 @@ class nest:
         self.img = scale_image(pygame.image.load("nest.png"), 1)
     
     def draw(self, win):
-        blit_rotate_center(win, self.img, self.position, self.angle)
+        blit_rotate_center(win, self.img, (self.position[0]-32,self.position[1]-32), self.angle)
     
 def StockTheFood(Nest, theAnt):
         Nest.sizeOfFoodStocks += 1
         theAnt.gidilecek_yol_kaldi_mi = True
+        theAnt.angle += 180
         theAnt.state = print("The Ant Stock The Food")
         theAnt.state = 1
 

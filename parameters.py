@@ -1,5 +1,5 @@
-width = 1366
-height = 768
+width = 1200
+height = 800
 resolution = (width, height)
 
 ant_count = 10

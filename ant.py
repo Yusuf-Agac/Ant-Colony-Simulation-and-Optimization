@@ -10,6 +10,7 @@ from random_ant_movement import Random_Travel
 from noisy_goingdirection import calculate_Noisy_GoingDirection
 import random
 import WorldManagement
+import Food_and_Nest_Lists
 from Food_and_Nest_Lists import *
 from random_ant_movement import Random_Travel
 from utils import *
@@ -30,7 +31,7 @@ class Ant:
     def __init__(self, mainWIN, world):
         self.mainWin : pygame.Surface = mainWIN
         self.world : WorldManagement.World = world
-        self.position = [1032, 282]
+        self.position = [1000, 250]
 
         self.velocity = 2
         self.maxVel = 3
@@ -149,9 +150,9 @@ class Ant:
                     self.mainWin.set_at((self.position[0], self.position[1]), (255,255, 255))
                 else:
                     Random_Travel(self)
-                
+                    """
                     if(not self.remembered_food == None):
-                        self.world.map_of_pheromones.setPheromone(True, self.position, self.remembered_food)
+                        self.world.map_of_pheromones.setPheromone(True, self.position, self.remembered_food)"""
                     
         
             

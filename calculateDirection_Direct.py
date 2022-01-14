@@ -1,5 +1,6 @@
 import math
 from math import pi, degrees, radians, sqrt, atan2
+import random
 
 #Belirtilen konumuna
 
@@ -25,7 +26,7 @@ def calculate_Direct_GoingDirection(focusPosition, ant):
         ant.gidilecek_yol_kaldi_mi = False
 
 def directStep(ant):
-
+    ant.velocity = random.uniform(1.5, 3.5)
     radians = math.radians(ant.angle)
     vertical = math.cos(radians) * ant.velocity
     horizontal = math.sin(radians) * ant.velocity
