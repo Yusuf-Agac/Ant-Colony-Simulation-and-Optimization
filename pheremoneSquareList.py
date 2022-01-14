@@ -53,17 +53,18 @@ for i in range(SQUAREAMOUNT):
 def drawRectList(WIN):
         for i in range(SQUAREAMOUNT*SQUAREAMOUNT):
                 #vaporize
-                rectList[i].redAlphaNumber -= 0.3
-                rectList[i].blueAlphaNumber -= 0.3
+                rectList[i].redAlphaNumber -= 1
+                rectList[i].blueAlphaNumber -= 1
                 #draw
                 rectList[i].drawRed(WIN)
                 rectList[i].drawBlue(WIN)
                         
 
-def addRedAlpha(index):
-        if rectList[index].redAlphaNumber<255:
-                rectList[index].redAlphaNumber += 1
+def addRedAlpha(index, GRID):
+        if rectList[len(GRID) - index].redAlphaNumber<255:
+                rectList[len(GRID) - index].redAlphaNumber += 3
                 
-def addBlueAlpha(index):
-        if rectList[index].blueAlphaNumber<255:
-                rectList[index].blueAlphaNumber += 1
+def addBlueAlpha(index, GRID):
+
+        if rectList[GRID - index].blueAlphaNumber<255:
+                rectList[GRID - index].blueAlphaNumber += 3
