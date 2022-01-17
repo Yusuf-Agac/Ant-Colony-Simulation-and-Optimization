@@ -40,9 +40,9 @@ class pheremoneRect:
                 self.image.fill(tuple(self.Color))
 
                 if(self.redAlphaNumber>self.blueAlphaNumber):
-                        self.image.set_alpha(self.redAlphaNumber/1.5)
+                        self.image.set_alpha(self.redAlphaNumber/3)
                 else:
-                        self.image.set_alpha(self.blueAlphaNumber/1.5)
+                        self.image.set_alpha(self.blueAlphaNumber/3)
 
                 WIN.blit(self.image, self.position)
 
