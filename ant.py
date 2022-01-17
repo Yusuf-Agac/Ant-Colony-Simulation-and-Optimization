@@ -48,7 +48,10 @@ class Ant:
         self.angle = random.randint(0,360)
 
         self.state = 1
-        self.img = scale_image(pygame.image.load("ant.png"), 0.4)
+    
+        self.pixelSize = 32
+        self.scale = 0.4
+        self.img = scale_image(pygame.image.load("ant.png"), self.scale)
 
         self.gidilecek_yol_kaldi_mi = True
         self.remembered_nest : nest = WhichNestIsClosest(self.position)
@@ -99,7 +102,7 @@ class Ant:
             #Yemek çok yakın, yemeğe direkt git hatta ısırabiliyorsan ısır
             if(yemek_cok_yakin_mi):
 
-                calculate_Direct_GoingDirection(closest_food.position, self)
+                calculate_Direct_GoingDirection(closest_food, self)
 
                 #Yemeğe direk gitme hesaplamasını yap, ısırabiliyorsan ısır ve eve dönüş state'lerini vs yap
                 if(not self.gidilecek_yol_kaldi_mi):
@@ -141,7 +144,7 @@ class Ant:
             #Ev yakındaysa eve yönel, yemeği bırak
             if(cok_yakinda_ev_var_mi):
 
-                calculate_Direct_GoingDirection(closest_nest.position, self)
+                calculate_Direct_GoingDirection(closest_nest, self)
 
                 if(not self.gidilecek_yol_kaldi_mi):
                     StockTheFood(closest_nest, self)

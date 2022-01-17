@@ -16,7 +16,9 @@ class food:
         self.position = [100, 600]
         self.angle = 0
         self.size = 100000
-        self.img = scale_image(pygame.image.load("food.png"), 5)
+        self.scale = 5
+        self.pixelSize = 8
+        self.img = scale_image(pygame.image.load("food.png"), self.scale)
     
     def draw(self, win):
         blit_rotate_center(win, self.img, self.position, self.angle)
@@ -69,10 +71,12 @@ class nest:
         self.position = [800, 250]
         self.angle = 0
         self.sizeOfFoodStocks = 0
-        self.img = scale_image(pygame.image.load("nest.png"), 1)
+        self.scale = 1
+        self.pixelSize = 64
+        self.img = scale_image(pygame.image.load("nest.png"), self.scale)
     
     def draw(self, win):
-        blit_rotate_center(win, self.img, (self.position[0]-32,self.position[1]-32), self.angle)
+        blit_rotate_center(win, self.img, (self.position[0],self.position[1]), self.angle)
     
 def StockTheFood(Nest, theAnt):
         Nest.sizeOfFoodStocks += 1

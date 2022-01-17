@@ -4,11 +4,11 @@ import random
 
 #Belirtilen konumuna
 
-def calculate_Direct_GoingDirection(focusPosition, ant):
+def calculate_Direct_GoingDirection(FocusObj, ant):
     global stepAmount
 
-    waysXlength = focusPosition[0] - ant.position[0]
-    waysYlength = focusPosition[1] - ant.position[1]
+    waysXlength = (FocusObj.position[0]+((FocusObj.scale*FocusObj.pixelSize)/2)) - ant.position[0]
+    waysYlength = (FocusObj.position[1]+((FocusObj.scale*FocusObj.pixelSize)/2)) - ant.position[1]
 
     theLength = sqrt(((waysXlength)*(waysXlength))+((waysYlength)*(waysYlength)))
 

@@ -14,10 +14,10 @@ class pheromoneMap:
 
 
     def setPheromone(self, theAnt):
-        index_y : int = int(theAnt.position[1] / (parameters.height / self.GRIDSIZEY))
+        index_y : int = int((theAnt.position[1]+((theAnt.scale*theAnt.pixelSize)/2)) / (parameters.height / self.GRIDSIZEY))
         if(index_y < 0 or index_y >= self.GRIDSIZEY - 1):
             return
-        index_x : int = int((theAnt.position[0] / (parameters.width / self.GRIDSIZEX)))
+        index_x : int = int(((theAnt.position[0]+((theAnt.scale*theAnt.pixelSize)/2)) / (parameters.width / self.GRIDSIZEX)))
         if(index_x < 0 or index_x >= self.GRIDSIZEX - 1):
             return
         

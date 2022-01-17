@@ -9,6 +9,7 @@ from typing import List
 import parameters
 
 SQUAREAMOUNT = 150
+VAPORIZEAMOUNT = 1
 rectList = []
 
 class pheremoneRect:
@@ -17,15 +18,14 @@ class pheremoneRect:
 
         def __init__(self, position):
             
-                self.RED = (255, 0, 0)
-                self.BLUE = (0, 0, 255)
+                self.RED = (1, 0, 0)
+                self.BLUE = (0, 0, 1)
+                self.Color = [0, 0, 0]
                 self.size = (width/SQUAREAMOUNT-1, height/SQUAREAMOUNT-1)
                 
 
-                self.red_image = pygame.Surface(self.size, pygame.SRCALPHA)
+                self.image = pygame.Surface(self.size, pygame.SRCALPHA)
                 self.redAlphaNumber = 0
-
-                self.blue_image = pygame.Surface(self.size, pygame.SRCALPHA)
                 self.blueAlphaNumber = 0
                 
 
@@ -33,15 +33,18 @@ class pheremoneRect:
 
                 self.position = position
 
-        def drawRed(self, WIN):
-                self.red_image.fill(self.RED)
-                self.red_image.set_alpha(self.redAlphaNumber)
-                WIN.blit(self.red_image, self.position)
+        def draw(self, WIN):
 
-        def drawBlue(self, WIN):
-                self.blue_image.fill(self.BLUE)
-                self.blue_image.set_alpha(self.blueAlphaNumber)
-                WIN.blit(self.blue_image, self.position)
+                self.Color[0] = self.redAlphaNumber
+                self.Color[2] = self.blueAlphaNumber
+                self.image.fill(tuple(self.Color))
+
+                if(self.redAlphaNumber>self.blueAlphaNumber):
+                        self.image.set_alpha(self.redAlphaNumber)
+                else:
+                        self.image.set_alpha(self.blueAlphaNumber)
+
+                WIN.blit(self.image, self.position)
 
 for i in range(SQUAREAMOUNT):
         for j in range(SQUAREAMOUNT):
@@ -52,10 +55,11 @@ for i in range(SQUAREAMOUNT):
 def drawRectList(WIN):
         for i in range(SQUAREAMOUNT*SQUAREAMOUNT):
                 #draw
-                rectList[i].drawBlue(WIN)
-                rectList[i].drawRed(WIN)
-                rectList[i].blueAlphaNumber -= 1
-                rectList[i].redAlphaNumber -= 1
+                rectList[i].draw(WIN)
+                if(rectList[i].blueAlphaNumber-VAPORIZEAMOUNT>VAPORIZEAMOUNT):
+                        rectList[i].blueAlphaNumber -= VAPORIZEAMOUNT
+                if(rectList[i].redAlphaNumber-VAPORIZEAMOUNT>VAPORIZEAMOUNT):
+                        rectList[i].redAlphaNumber -= VAPORIZEAMOUNT
                         
                 
 def addBlueAlpha(index, GRIDSIZEX, GRIDSIZEY):
