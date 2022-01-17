@@ -43,7 +43,7 @@ class Ant:
         self.timesNoTurn=0
 
         self.trigger_radius = 10
-        self.burun_gucu = 50
+        self.burun_gucu = 100
 
         self.angle = random.randint(0,360)
 

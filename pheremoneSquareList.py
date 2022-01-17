@@ -8,8 +8,8 @@ from utils import scale_image, blit_rotate_center
 from typing import List
 import parameters
 
-SQUAREAMOUNT = 30
-VAPORIZEAMOUNT = 1
+SQUAREAMOUNT = 113
+VAPORIZEAMOUNT = 1.5
 rectList = []
 
 class pheremoneRect:
@@ -40,9 +40,9 @@ class pheremoneRect:
                 self.image.fill(tuple(self.Color))
 
                 if(self.redAlphaNumber>self.blueAlphaNumber):
-                        self.image.set_alpha(self.redAlphaNumber)
+                        self.image.set_alpha(self.redAlphaNumber/1.5)
                 else:
-                        self.image.set_alpha(self.blueAlphaNumber)
+                        self.image.set_alpha(self.blueAlphaNumber/1.5)
 
                 WIN.blit(self.image, self.position)
 

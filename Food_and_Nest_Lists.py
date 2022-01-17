@@ -15,7 +15,7 @@ class food:
         #self.world : WorldManagement.World = world
         self.position = [100, 600]
         self.angle = 0
-        self.size = 100000
+        self.size = 500
         self.scale = 5
         self.pixelSize = 8
         self.img = scale_image(pygame.image.load("food.png"), self.scale)

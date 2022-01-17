@@ -56,10 +56,10 @@ class pheromoneMap:
     def Update(self):
 
         for i in range(self.GRIDSIZEX * self.GRIDSIZEY):
-            if(rectList[i].blueAlphaNumber<4):
+            if(rectList[i].blueAlphaNumber<2):
                 self.GRID[i][0] = None
                     #print("blue")
-            if(rectList[i].redAlphaNumber<4):
+            if(rectList[i].redAlphaNumber<2):
                 self.GRID[i][1] = None
                     #print("red")
 

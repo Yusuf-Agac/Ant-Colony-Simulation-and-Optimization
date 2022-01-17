@@ -6,7 +6,7 @@ import math
 #Neredeyse bir çizgi üzerinden en kısa yoldan git
 #Eger gidecek yol kalmadiysa false döndür
 def calculate_Noisy_GoingDirection(theAnt, destination):
-    ant_to_food : float = [destination.position[0] - theAnt.position[0], destination.position[1] - theAnt.position[1]]
+    ant_to_food : float = [destination.position[0]+((destination.scale*destination.pixelSize)/2) - theAnt.position[0], destination.position[1]+((destination.scale*destination.pixelSize)/2) - theAnt.position[1]]
     
     rads = atan2(-ant_to_food[1], ant_to_food[0])
     rads %= 2*pi
@@ -14,9 +14,9 @@ def calculate_Noisy_GoingDirection(theAnt, destination):
     ant_to_food_degrees = degs - 90
 
     if(ant_to_food_degrees>theAnt.angle):
-        theAnt.angle += ((ant_to_food_degrees-theAnt.angle)/2)*random.uniform(0.1, 2)
+        theAnt.angle += (ant_to_food_degrees-theAnt.angle)*random.uniform(0.5, 1)
     elif (ant_to_food_degrees<theAnt.angle):
-        theAnt.angle -= ((theAnt.angle-ant_to_food_degrees)/2)*random.uniform(0.1, 2)
+        theAnt.angle -= (theAnt.angle-ant_to_food_degrees)*random.uniform(0.5, 1)
     
     step1(theAnt)
 
