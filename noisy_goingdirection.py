@@ -13,13 +13,17 @@ def calculate_Noisy_GoingDirection(theAnt, destination):
     degs = degrees(rads)
     ant_to_food_degrees = degs - 90
 
-    theAnt.angle = ant_to_food_degrees #radians(rand + theAnt.angle)
+    if(ant_to_food_degrees>theAnt.angle):
+        theAnt.angle += ((ant_to_food_degrees-theAnt.angle)/2)*random.uniform(0.1, 2)
+    elif (ant_to_food_degrees<theAnt.angle):
+        theAnt.angle -= ((theAnt.angle-ant_to_food_degrees)/2)*random.uniform(0.1, 2)
     
     step1(theAnt)
 
     
 
 def step1(theAnt):
+    theAnt.velocity = random.uniform(1.5, 3.5)
     radians = math.radians(theAnt.angle)
     vertical = math.cos(radians) * theAnt.velocity
     horizontal = math.sin(radians) * theAnt.velocity

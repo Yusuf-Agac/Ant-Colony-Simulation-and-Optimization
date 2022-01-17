@@ -1,6 +1,7 @@
+from asyncio.windows_events import NULL
 from pygame import math
 import parameters
-from pheremoneSquareList import addBlueAlpha, addRedAlpha
+from pheremoneSquareList import addBlueAlpha, addRedAlpha, rectList
 
 class pheromoneMap:
     def __init__(self, GridSizeX, GridSizeY):
@@ -52,5 +53,14 @@ class pheromoneMap:
         else:
             return True
     
-    def Update():
-        pass
+    def Update(self):
+
+        for i in range(self.GRIDSIZEX * self.GRIDSIZEY):
+            if(rectList[i].blueAlphaNumber<4):
+                self.GRID[i][0] = None
+                    #print("blue")
+            if(rectList[i].redAlphaNumber<4):
+                self.GRID[i][1] = None
+                    #print("red")
+
+        

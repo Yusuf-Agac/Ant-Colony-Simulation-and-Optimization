@@ -8,7 +8,7 @@ from utils import scale_image, blit_rotate_center
 from typing import List
 import parameters
 
-SQUAREAMOUNT = 150
+SQUAREAMOUNT = 30
 VAPORIZEAMOUNT = 1
 rectList = []
 

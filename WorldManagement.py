@@ -1,3 +1,4 @@
+import imp
 from typing import AnyStr
 import pheromoneMap
 from Food_and_Nest_Lists import *
@@ -16,7 +17,7 @@ from typing import List
 #first parameter is speed secone one is turning speed
 rotateVel = 0.7
 maxVel = 2
-antAmount = 100
+antAmount = 400
 foodAmount = 1
 nestAmount = 1
 
@@ -45,6 +46,7 @@ class World:
 
         pheremoneSquareList.drawRectList(self.win)
         
+        self.map_of_pheromones.Update()
 
         for nest in NestList:
             nest.draw(self.win)

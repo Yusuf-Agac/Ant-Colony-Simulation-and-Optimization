@@ -43,7 +43,7 @@ class Ant:
         self.timesNoTurn=0
 
         self.trigger_radius = 10
-        self.burun_gucu = 200
+        self.burun_gucu = 50
 
         self.angle = random.randint(0,360)
 
@@ -133,7 +133,6 @@ class Ant:
         # Ev ara
         elif(self.state == 2):
 
-            closest_nest = None
             closest_nest = WhichNestIsClosest(self.position)
 
             cok_yakinda_ev_var_mi = self.isCloseEnoughToNest(self.burun_gucu, closest_nest)
