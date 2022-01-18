@@ -17,8 +17,8 @@ from typing import List
 #first parameter is speed secone one is turning speed
 rotateVel = 0.7
 maxVel = 2
-antAmount = 200
-foodAmount = 2
+antAmount = 300
+foodAmount = 3
 nestAmount = 1
 
 
@@ -41,8 +41,11 @@ class World:
         for food_i in range(foodAmount):
             FoodList.append(food())
 
+        FoodList[0].img = scale_image(pygame.image.load("food.png"), FoodList[0].scale*2)
         FoodList[1].position[1] = 200
         FoodList[1].size = 60
+        FoodList[2].position[0] = 400
+        FoodList[2].size = 60
 
 
     def update_and_draw(self):

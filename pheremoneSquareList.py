@@ -9,7 +9,7 @@ from typing import List
 import parameters
 
 SQUAREAMOUNT = 113
-VAPORIZEAMOUNT = 1.5
+VAPORIZEAMOUNT = 1
 rectList = []
 
 class pheremoneRect:

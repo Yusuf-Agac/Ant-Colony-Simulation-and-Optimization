@@ -52,7 +52,7 @@ def Bite(Food, theAnt):
     Food.size -= 1
     print("The Ant Bite The Food")
     theAnt.gidilecek_yol_kaldi_mi = True
-    theAnt.angle += 180
+    theAnt.angle += 180 * random.uniform(0.9, 1)
     if Food.size <= 0:
         print("Food is done")
         print(Food)
